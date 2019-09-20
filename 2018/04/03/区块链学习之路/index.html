@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt("Please enter the password!") !== ''){
+                alert("Error!");
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5e7162b1.js","daovoice")
+daovoice('init', {
+  app_id: "5e7162b1"
+});
+daovoice('update');
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BlokChainTech," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Innovation" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="区块链的诞生互联网上的贸易，几乎都需要借助可资信赖的第三方信用机构来处理电子支付信息。这类系统仍然内生性地受制于“基于信用的模式”。区块链技术是构建比特币区块链网络与交易信息加密传输的基础技术。它基于密码学原理而不基于信用，使得任何达成一致的双方直接支付，从而不需要第三方中介的参与。 定义： 区块链是一个分布式账本，一种通过去中心化、去信任的方式集体维护一个可靠数据库的技术方案。 从数据的角度来看">
+<meta name="keywords" content="BlokChainTech">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链学习之路之(一)">
+<meta property="og:url" content="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/区块链学习之路/index.html">
+<meta property="og:site_name" content="Innovation">
+<meta property="og:description" content="区块链的诞生互联网上的贸易，几乎都需要借助可资信赖的第三方信用机构来处理电子支付信息。这类系统仍然内生性地受制于“基于信用的模式”。区块链技术是构建比特币区块链网络与交易信息加密传输的基础技术。它基于密码学原理而不基于信用，使得任何达成一致的双方直接支付，从而不需要第三方中介的参与。 定义： 区块链是一个分布式账本，一种通过去中心化、去信任的方式集体维护一个可靠数据库的技术方案。 从数据的角度来看">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019141210842">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019151550800">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019145330069">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019142501390">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019142912302">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019144924882">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019142955256">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019143328120">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019145437195">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019143358718">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019143410215">
+<meta property="og:image" content="https://img-blog.csdn.net/20161019143456981">
+<meta property="og:updated_time" content="2018-04-03T15:38:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="区块链学习之路之(一)">
+<meta name="twitter:description" content="区块链的诞生互联网上的贸易，几乎都需要借助可资信赖的第三方信用机构来处理电子支付信息。这类系统仍然内生性地受制于“基于信用的模式”。区块链技术是构建比特币区块链网络与交易信息加密传输的基础技术。它基于密码学原理而不基于信用，使得任何达成一致的双方直接支付，从而不需要第三方中介的参与。 定义： 区块链是一个分布式账本，一种通过去中心化、去信任的方式集体维护一个可靠数据库的技术方案。 从数据的角度来看">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20161019141210842">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/区块链学习之路/"/>
+
+
+
+
+
+
+  <title>区块链学习之路之(一) | Innovation</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/IlIlIlIlIlIlI/ilililililili.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Innovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/区块链学习之路/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Innovation">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.imgur.com/sux5MCd.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Innovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">区块链学习之路之(一)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T23:23:24+08:00">
+                2018-04-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-03T23:38:42+08:00">
+                2018-04-03
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/03/区块链学习之路/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/03/区块链学习之路/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/03/区块链学习之路/" class="leancloud_visitors" data-flag-title="区块链学习之路之(一)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,734
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="区块链的诞生"><a href="#区块链的诞生" class="headerlink" title="区块链的诞生"></a>区块链的诞生</h1><p>互联网上的贸易，几乎都需要借助可资信赖的<code>第三方信用机构</code>来处理电子支付信息。这类系统仍然内生性地受制于“基于信用的模式”。区块链技术是构建比特币区块链网络与交易信息加密传输的基础技术。它基于密码学原理而不基于信用，使得任何达成一致的<code>双方直接支付</code>，从而不需要第三方中介的参与。</p>
+<p><code>定义：</code></p>
+<p>区块链是一个<code>分布式账本</code>，一种通过<code>去中心化、去信任</code>的方式集体维护一个可靠数据库的技术方案。</p>
+<p>从数据的角度来看：区块链是一种几乎不可能被更改的分布式数据库。这里的“分布式”不仅体现为数据的分布式存储，也体现为数据的<code>分布式记录</code>（即由系统参与者共同维护）。</p>
+<p>从技术的角度来看：区块链并不是一种单一的技术，而是<code>多种技术整合的结果</code>。这些技术以新的结构组合在一起，形成了一种新的数据记录、存储和表达的方式。<br><img src="https://img-blog.csdn.net/20161019141210842" alt=""></p>
+<p>区块链目前还处在早期阶段，一些嗅到商机的大企业，技术牛人都对此开展了研究。初期阶段，想想有木有好兴奋….</p>
+<p><img src="https://img-blog.csdn.net/20161019151550800" alt=""></p>
+<h1 id="区块链技术的特征"><a href="#区块链技术的特征" class="headerlink" title="区块链技术的特征"></a>区块链技术的特征</h1><h2 id="开放，共识"><a href="#开放，共识" class="headerlink" title="开放，共识"></a>开放，共识</h2><p>任何人都可以参与到区块链网络，每一台设备都能作为一个节点，每个节点都允许获得一份完整的数据库拷贝。节点间基于一套共识机制，通过竞争计算共同维护整个区块链。任一节点失效，其余节点仍能正常工作。</p>
+<h2 id="去中心，去信任"><a href="#去中心，去信任" class="headerlink" title="去中心，去信任"></a>去中心，去信任</h2><p>区块链由众多节点共同组成一个端到端的网络，不存在中心化的设备和管理机构。节点之间数据交换通过数字签名技术进行验证，无需互相信任，只要按照系统既定的规则进行，节点之间不能也无法欺骗其它节点。</p>
+<h2 id="交易透明，双方匿名"><a href="#交易透明，双方匿名" class="headerlink" title="交易透明，双方匿名"></a>交易透明，双方匿名</h2><p>区块链的运行规则是公开透明的，所有的数据信息也是公开的，因此每一笔交易都对所有节点可见。由于节点与节点之间是去信任的，因此节点之间无需公开身份，每个参与的节点都是匿名的。</p>
+<h2 id="不可篡改，可追溯"><a href="#不可篡改，可追溯" class="headerlink" title="不可篡改，可追溯"></a>不可篡改，可追溯</h2><p>单个甚至多个节点对数据库的修改无法影响其他节点的数据库，除非能控制整个网络中超过51%的节点同时修改，这几乎不可能发生。区块链中的每一笔交易都通过密码学方法与相邻两个区块串联，因此可以追溯到任何一笔交易的前世今生。</p>
+<h1 id="区块链中的关键技术原理"><a href="#区块链中的关键技术原理" class="headerlink" title="区块链中的关键技术原理"></a>区块链中的关键技术原理</h1><p>区块链的整个架构如下图所示<br><img src="https://img-blog.csdn.net/20161019145330069" alt=""></p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>数字签名涉及到一个哈希函数、发送者的公钥、发送者的私钥。数字签名有两个作用，一是能确定消息确实是由发送方签名并发出来的。二是数字签名能确定消息的完整性。</p>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p>发送报文时，发送方用一个哈希函数从报文文本中生成报文摘要，然后用自己的私钥对摘要进行加密，加密后的摘要将作为报文的数字签名和报文一起发送给接收方，接收方首先用与发送方一样的哈希函数从接收到的原始报文中计算出报文摘要，接着再用发送方的公钥来对报文附加的数字签名进行解密，如果这两个摘要相同、那么接收方就能确认该数字签名是发送方的。</p>
+<h2 id="SHA256"><a href="#SHA256" class="headerlink" title="SHA256"></a>SHA256</h2><p><code>一种求Hash值的加密算法。</code></p>
+<h3 id="工作原理-1"><a href="#工作原理-1" class="headerlink" title="工作原理"></a>工作原理</h3><p>将任何一串数据输入到SHA256将得到一个256位的Hash值（散列值）。其特点：相同的数据输入将得到相同的结果。输入数据只要稍有变化（比如一个1变成了0）则将得到一个千差万别的结果，且结果无法事先预知。正向计算（由数据计算其对应的Hash值）十分容易。逆向计算（俗称“破解”，即由Hash值计算出其对应的数据）极其困难，在当前科技条件下被视作不可能。</p>
+<h2 id="Merkle-Tree"><a href="#Merkle-Tree" class="headerlink" title="Merkle Tree"></a>Merkle Tree</h2><p>一种<code>哈希二叉树</code>，使用它可以快速校验大规模数据的完整性。在比特币网络中，Merkle 树被用来归纳一个区块中的所有交易信息，最终生成这个区块所有交易信息的一个统一的哈希值，区块中任何一笔交易信息的改变都会使得使得Merkle 树改变。</p>
+<h3 id="工作原理-2"><a href="#工作原理-2" class="headerlink" title="工作原理"></a>工作原理</h3><p>网上大都称为Merkle Hash Tree,这是因为 它所构造的Merkle Tree的所有节点都是Hash值。Merkle Tree具有以下特点：</p>
+<ol>
+<li><p>它是一种树，可以是二叉树，也可以多叉树，无论是几叉树，它都具有树结构的所有特点；</p>
+</li>
+<li><p>Merkle树的叶子节点上的value，是由你指定的，这主要看你的设计了，如Merkle Hash Tree会将数据的Hash值作为叶子节点的值；</p>
+</li>
+<li><p>非叶子节点的value是根据它下面所有的叶子节点值，然后按照一定的算法计算而得出的。如Merkle Hash Tree的非叶子节点value的计算方法是将该节点的所有子节点进行组合，然后对组合结果进行hash计算所得出的hash value。<br><img src="https://img-blog.csdn.net/20161019142501390" alt=""></p>
+</li>
+</ol>
+<h2 id="时间戳服务器"><a href="#时间戳服务器" class="headerlink" title="时间戳服务器"></a>时间戳服务器</h2><p>大多用来进行比对以及验证处理，时间戳服务器是一款基于PKI（公钥密码基础设施）技术的时间戳权威系统，对外提供精确可信的时间戳服务。它采用精确的时间源、高强度高标准的安全机制，以确认系统处理数据在某一时间的存在性和相关操作的相对时间顺序，为信息系统中的时间防抵赖提供基础服务。</p>
+<h1 id="区块链的第一个成功应用"><a href="#区块链的第一个成功应用" class="headerlink" title="区块链的第一个成功应用"></a>区块链的第一个成功应用</h1><p><img src="https://img-blog.csdn.net/20161019142912302" alt=""></p>
+<p><code>比特币</code>是区块链技术的第一个应用，它的生态圈如下：</p>
+<p><img src="https://img-blog.csdn.net/20161019144924882" alt=""></p>
+<p><code>任何机器都可以运行一个完整的比特币节点</code>，一个完整的比特币节点包括如下功能：</p>
+<ol>
+<li>钱包，允许用户在区块链网络上进行交易</li>
+<li>完整区块链，记录了所有交易历史，通过特殊的结构保证历史交易的安全性，并且用来验证新交易的合法性</li>
+<li>矿工，通过记录交易及解密数学题来生成新区块，如果成功可以赚取奖励</li>
+<li>路由功能，把其它节点传送过来的交易数据等信息再传送给更多的节点</li>
+</ol>
+<p><img src="https://img-blog.csdn.net/20161019142955256" alt=""></p>
+<p>第1步：所有者A利用他的私钥对前一次交易（比特货来源）和下一位所有者B签署一个数字签名，并将这个签名附加在这枚货币的末尾，制作成交易单</p>
+<p><strong>要点：B以公钥作为接收方地址</strong></p>
+<p>第2步：A将交易单广播至全网，比特币就发送给了B，每个节点都将收到的交易信息纳入一个区块中</p>
+<p><strong>要点：对B而言，该枚比特币会即时显示在比特币钱包中，但直到区块确认成功后才可用。目前一笔比特币从支付到最终确认成功，得到6个区块确认之后才能真正确认到帐。</strong></p>
+<p>第3步：每个节点通过解一道数学难题，从而去获得创建新区块权利，并争取得到比特币的奖励（新比特币会在此过程中产生）</p>
+<p><strong>要点：节点反复尝试寻找一个数值，使得将该数值、区块链中最后一个区块的Hash值以及交易单三部分送入SHA256算法后能计算出散列值X（256位）满足一定条件（比如前20位均为0），即找到数学难题的解。由此可见，答案并不唯一</strong></p>
+<p>第4步：当一个节点找到解时，它就向全网广播该区块记录的所有盖时间戳交易，并由全网其他节点核对</p>
+<p><strong>要点：时间戳用来证实特定区块必然于某特定时间是的确存在的。比特币网络采取从5个以上节点获取时间，然后取中间值的方式作为时间戳。</strong></p>
+<p>第5步：全网其他节点核对该区块记账的正确性，没有错误后他们将在该合法区块之后竞争下一个区块，这样就形成了一个合法记账的区块链。</p>
+<p><strong>要点：每个区块的创建时间大约在10分钟。随着全网算力的不断变化，每个区块的产生时间会随算力增强而缩短、随算力减弱而延长。其原理是根据最近产生的2016年区块的时间差（约两周时间），自动调整每个区块的生成难度（比如减少或增加目标值中0的个数），使得每个区块的生成时间是10分钟。</strong></p>
+<p>5、主要的数据结构</p>
+<p>区块链以区块为单位组织数据。全网所有的交易记录都以交易单的形式存储在全网唯一的区块链中。<br><img src="https://img-blog.csdn.net/20161019143328120" alt=""></p>
+<p>区块是一种记录交易的数据结构。每个区块由区块头和区块主体组成，区块主体只负责记录前一段时间内的所有交易信息，区块链的大部分功能都由区块头实现。</p>
+<p><img src="https://img-blog.csdn.net/20161019145437195" alt=""></p>
+<p>1.版本号，标示软件及协议的相关版本信息<br>2.父区块哈希值，引用的区块链中父区块头的哈希值，通过这个值每个区块才首尾相连组成了区块链，并且这个值对区块链的安全性起到了至关重要的作用<br>3.Merkle根，这个值是由区块主体中所有交易的哈希值再逐级两两哈希计算出来的一个数值，主要用于检验一笔交易是否在这个区块中存在<br>4.时间戳，记录该区块产生的时间，精确到秒<br>5.难度值，该区块相关数学题的难度目标<br>6.随机数(Nonce)，记录解密该区块相关数学题的答案的值</p>
+<p><img src="https://img-blog.csdn.net/20161019143358718" alt=""></p>
+<p>在当前区块加入区块链后，所有矿工就立即开始下一个区块的生成工作。</p>
+<p>1.把在本地内存中的交易信息记录到区块主体中<br>2.在区块主体中生成此区块中所有交易信息的 Merkle 树，把 Merkle 树根的值保存在区块头中<br>3.把上一个刚刚生成的区块的区块头的数据通过 SHA256 算法生成一个 哈希值填入到当前区块的父哈希值中<br>4.把当前时间保存在时间戳字段中<br>5.难度值字段会根据之前一段时间区块的平均生成时间进行调整以应对整个网络不断变化的整体计算总量，如果计算总量增长了，则系统会调高数学题的难度值，使得预期完成下一个区块的时间依然在一定时间内</p>
+<p><img src="https://img-blog.csdn.net/20161019143410215" alt=""></p>
+<h1 id="核心问题"><a href="#核心问题" class="headerlink" title="核心问题"></a>核心问题</h1><h2 id="工作量证明"><a href="#工作量证明" class="headerlink" title="工作量证明"></a>工作量证明</h2><p>区块头包含一个随机数，使得区块的随机散列值出现了所需的0个数。节点通过反复尝试来找到这个随机数，这样就构建了一个工作量证明机制。工作量证明机制的本质是一CPU一票，“大多数”的决定表达为最长的链，因为最长的链包含了最大的工作量。如果大多数的CPU为诚实的节点控制，那么诚实的链条将以最快的速度延长，并超越其他的竞争链条。如果想要修改已出现的区块，攻击者必须重新完成该区块的工作量外加该区块之后所有区块的工作量，并最终赶上和超越诚实节点的工作量。</p>
+<h2 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h2><p>同一时间段内全网不止一个节点能计算出随机数，即会有多个节点在网络中广播它们各自打包好的临时区块（都是合法的）。</p>
+<p>某一节点若收到多个针对同一前续区块的后续临时区块，则该节点会在本地区块链上建立分支，多个临时区块对应多个分支。该僵局的打破要等到下一个工作量证明被发现，而其中的一条链条被证实为是较长的一条，那么在另一条分支链条上工作的节点将转换阵营，开始在较长的链条上工作。其他分支将会被网络彻底抛弃。</p>
+<p><img src="https://img-blog.csdn.net/20161019143456981" alt=""></p>
+<h2 id="双花"><a href="#双花" class="headerlink" title="双花"></a>双花</h2><p>双花，即<code>二重支付</code>，指攻击者几乎同时将同一笔钱用作不同交易。</p>
+<p>每当节点在把新收到的交易单加入区块之前，会顺着交易的发起方的公钥向前遍历检查，检查当前交易所用的币是否确实属于当前交易发起方，此检查可遍历到该币的最初诞生点（即产生它的那块区块源）。虽然多份交易单可以任意序的广播，但是它们最终被加入区块时必定呈现一定的顺序。区块之间以Hash值作为时间戳则区块，这决定了任意一笔交易资金来源都可以被确定的回溯。</p>
+<p>7、应用场景</p>
+<p><strong>从需求端来看</strong>，金融、医疗、公证、通信、供应链、域名、投票等领域都开始意识到区块链的重要性并开始尝试将技术与现实社会对接。</p>
+<p><strong>从投资端来看</strong>，区块链的投资资金供给逐步上升，风投的投资热情也不断高涨，投资密度越来越大，供给端的资金供给有望推动技术的进一步发展。</p>
+<p><strong>从市场应用来看</strong>，区块链能成为一种市场工具，帮助社会削减平台成本，让中间机构成为过去；区块链将促使公司现有业务模式重心的转移，有望加速公司的发展。</p>
+<h1 id="资料参考"><a href="#资料参考" class="headerlink" title="资料参考"></a>资料参考</h1><p>   <a href="http://www.doc88.com/p-3843131640343.html" target="_blank" rel="noopener">区块链技术发展现状和展望</a></p>
+<p>其他网页收集</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Adhere to original technology sharing, your support will encourage me to continue to create!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Innovation 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Innovation 比特币"/>
+        <p>比特币</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Innovation
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/区块链学习之路/" title="区块链学习之路之(一)">http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/区块链学习之路/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BlokChainTech/" rel="tag"># BlokChainTech</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/03/梯度下降法/" rel="next" title="数模-梯度下降法">
+                <i class="fa fa-chevron-left"></i> 数模-梯度下降法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/04/记一次Hexo博客页面css加载失效经历/" rel="prev" title="记一次本地Hexo文件中main.css被离奇掏空的经历">
+                记一次本地Hexo文件中main.css被离奇掏空的经历 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.imgur.com/sux5MCd.jpg"
+                alt="Innovation" />
+            
+              <p class="site-author-name" itemprop="name">Innovation</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#区块链的诞生"><span class="nav-number">1.</span> <span class="nav-text">区块链的诞生</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区块链技术的特征"><span class="nav-number">2.</span> <span class="nav-text">区块链技术的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开放，共识"><span class="nav-number">2.1.</span> <span class="nav-text">开放，共识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去中心，去信任"><span class="nav-number">2.2.</span> <span class="nav-text">去中心，去信任</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交易透明，双方匿名"><span class="nav-number">2.3.</span> <span class="nav-text">交易透明，双方匿名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可篡改，可追溯"><span class="nav-number">2.4.</span> <span class="nav-text">不可篡改，可追溯</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区块链中的关键技术原理"><span class="nav-number">3.</span> <span class="nav-text">区块链中的关键技术原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数字签名"><span class="nav-number">3.1.</span> <span class="nav-text">数字签名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作原理"><span class="nav-number">3.1.1.</span> <span class="nav-text">工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA256"><span class="nav-number">3.2.</span> <span class="nav-text">SHA256</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作原理-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merkle-Tree"><span class="nav-number">3.3.</span> <span class="nav-text">Merkle Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作原理-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间戳服务器"><span class="nav-number">3.4.</span> <span class="nav-text">时间戳服务器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区块链的第一个成功应用"><span class="nav-number">4.</span> <span class="nav-text">区块链的第一个成功应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核心问题"><span class="nav-number">5.</span> <span class="nav-text">核心问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作量证明"><span class="nav-number">5.1.</span> <span class="nav-text">工作量证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分叉"><span class="nav-number">5.2.</span> <span class="nav-text">分叉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双花"><span class="nav-number">5.3.</span> <span class="nav-text">双花</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料参考"><span class="nav-number">6.</span> <span class="nav-text">资料参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017 - 2019</span>
+  <span class="with-love">
+    <i class="fa fa-Innovation">♥</i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Innovation</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">25.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">本站总访问量<span id="busuanzi_value_site_pv"></span>次
+本站访客数<span id="busuanzi_value_site_uv"></span>次 | 由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'L77X4F9U4GkQrcGbvfSMJtOW-gzGzoHsz',
+        appKey: '27zQDIoJr3srhe92ohnT0Qfu',
+        placeholder: 'It is my honor to have a nice chat with you!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("wvUPI9zm3lO0MPfr5L5f0Hxw-gzGzoHsz", "wuiLdD1g4QUCkD2XxRRvmXe1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

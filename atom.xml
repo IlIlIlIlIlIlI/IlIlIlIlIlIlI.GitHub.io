@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Innovation</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/"/>
+  <updated>2018-04-06T08:18:10.000Z</updated>
+  <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/</id>
+  
+  <author>
+    <name>Innovation</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图论中最小生成树之Kruskal算法</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-%E5%9B%BE%E8%AE%BA-Kruskal%E7%AE%97%E6%B3%95/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-图论-Kruskal算法/</id>
+    <published>2019-06-23T14:48:08.306Z</published>
+    <updated>2018-04-06T08:18:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="图论中最小生成树之Kruskal算法"><a href="#图论中最小生成树之Kruskal算法" class="headerlink" title="图论中最小生成树之Kruskal算法"></a>图论中最小生成树之Kruskal算法</h1><h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h2><p>·</p><blockquote><p>Kruskal算法是一种用来寻找最小生成树的算法，基于并查集和贪心算法，由Joseph Kruskal在1956年发表。</p><p>用来解决同样问题的还有Prim算法和Boruvka算法等（现在还有一种比较新的算法——solin算法，这个算法的时间复杂度为（nlogm),即在最差的情况下也比Prim算法（nlogn）快，因为（nlogm）几乎达不到）。</p><p>三种算法都是贪婪算法的应用，和Boruvka算法不同的地方是，Kruskal算法在图中存在<strong>相同权值</strong>的边时也有效。</p></blockquote><h2 id="2-伪代码"><a href="#2-伪代码" class="headerlink" title="2.伪代码"></a>2.伪代码</h2><pre><code>int kruskal(int n,int m){/**初始化父节点；将图的边按权值排序；每次取权值最小的边；查：判断每条边的两端点是否属于同一集合，即是否有相同的根节点；并：若是同一集合,则舍去，反之合并到同一个根节点下；将选中的边的权值累加，并保存于变量ans中；*/}</code></pre><h2 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h2><pre><code>#include&lt;bits/stdc++.h&gt;#define maxn 1024using namespace std;typedef struct Edge{    int a;    int b;    int w;}edge;//定义全局变量，方便int n,m;edge a[maxn];int fa[maxn];//每个点的父节点int ra[maxn];//?每个点的阶数?//自建判断函数int cmp(const void *a,const void *b){    return ((edge*)a)-&gt;w - ((edge*)b)-&gt;w;}//初始化树void init(int n){    for(int i = 0;i&lt;n;i++)    {        ra[i] = 0;        fa[i] = i;    }}//查找点的父结点int finde(int x){/*    int root = x;    while(root != fa[root])    {        root = fa[root];    }    while(x != root)    {        int t = fa[x];        fa[x] = root;        x = t;    }    return root;}*///两种都可以        if(fa[x] == x)            return x;        else           finde(fa[x]);    }//连结两点void unite(int x,int y){    x = finde(x);    y = finde(y);    if(ra[x] &gt;= ra[y])    {        fa[y] = x;        if(ra[x] == ra[y])            ra[x]++;    }    else    {        fa[x] = y;    }}//查找最短路,返回最小值//n为边，m为点int kruskal(int n,int m){    int nEdge = 0;    int ans = 0;    qsort(a,n,sizeof(a[0]),cmp);    for(int i = 0;i&lt;n &amp;&amp; nEdge != m-1;i++)    {        //判断一条边的两个点是否为同一棵树        if(finde(a[i].a) != finde(a[i].b))        {                unite(a[i].a,a[i].b);                ans += a[i].w;                nEdge++;        }    }    //如果跳出循环，即加入的边的数量小于m-1，则表明改无向图不连通，即不存在最小生成数    if(nEdge &lt; m-1)    {        ans = -1;    }    return ans;}int main(){    int Ans;    //n = 0 时退出    while(scanf(&quot;%d%d&quot;,&amp;n,&amp;m),n)    {        init(m);        for(int i = 0;i&lt;n;i++)        {            scanf(&quot;%d%d%d&quot;,&amp;a[i].a,&amp;a[i].b,&amp;a[i].w);        }        Ans = kruskal(n,m);        if(Ans == -1)        {            printf(&quot;?\n&quot;);        }        else        {            printf(&quot;%d\n&quot;,Ans);        }    }    return 0;}</code></pre><p>运行结果：</p><p><img src="https://i.imgur.com/fAheIqZ.png" alt=""></p><h3 id="kruskal的时间复杂度"><a href="#kruskal的时间复杂度" class="headerlink" title="kruskal的时间复杂度"></a>kruskal的时间复杂度</h3><ul><li>Kruskal算法每次要从都要从剩余的边中选取一个最小的边。通常我们要先对边按权值从小到大排序，这一步的时间复杂度为为O(nlogn)。</li></ul><ul><li>Kruskal算法的实现通常使用并查集，来<strong>快速判断</strong>两个顶点是否属于同一个集合。<strong>最坏的情况可能要枚举完所有的边</strong>，此时要循环n次，所以这一步的时间复杂度为O(nα(V))，其中α为Ackermann函数，其增长<strong>非常慢</strong>，可以视为常数。</li></ul><ul><li>所以Kruskal算法的时间复杂度为O(nlogn)</li></ul><h2 id="大礼包"><a href="#大礼包" class="headerlink" title="大礼包"></a>大礼包</h2><h3 id="你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？"><a href="#你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？" class="headerlink" title="你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？"></a>你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？</h3><p>有位老兄为我们准备了<a href="http://blog.csdn.net/luomingjun12315/article/details/47438607" target="_blank" rel="noopener"><strong>图论大礼包</strong></a>!!!</p><p>在此感谢大佬<a href="http://blog.csdn.net/luomingjun12315" target="_blank" rel="noopener">@Enstein_Jun</a>！</p><h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul><li><a href="http://blog.csdn.net/luomingjun12315/article/details/47700237" target="_blank" rel="noopener">最小生成树之Kruskal算法</a></li><li><a href="http://blog.csdn.net/tham_/article/details/46049023" target="_blank" rel="noopener">图算法 最小生成树邻接表 Kruskal算法（并查集）</a></li><li><a href="https://www.cnblogs.com/biyeymyhjob/archive/2012/07/30/2615542.html" target="_blank" rel="noopener">最小生成树-Prim算法和Kruskal算法</a></li></ul><h4 id="学渣并不想跟你讲话，并向你扔了一道oj题-畅通工程"><a href="#学渣并不想跟你讲话，并向你扔了一道oj题-畅通工程" class="headerlink" title="学渣并不想跟你讲话，并向你扔了一道oj题 畅通工程"></a>学渣并不想跟你讲话，并向你扔了一道oj题 <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1863" target="_blank" rel="noopener">畅通工程</a></h4><h4 id="附上-Enstein-Jun的题解-传送门"><a href="#附上-Enstein-Jun的题解-传送门" class="headerlink" title="附上@Enstein_Jun的题解 传送门"></a>附上<a href="http://blog.csdn.net/luomingjun12315" target="_blank" rel="noopener">@Enstein_Jun</a>的题解 <a href="http://blog.csdn.net/luomingjun12315/article/details/47700237" target="_blank" rel="noopener">传送门</a></h4>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;图论中最小生成树之Kruskal算法&quot;&gt;&lt;a href=&quot;#图论中最小生成树之Kruskal算法&quot; class=&quot;headerlink&quot; title=&quot;图论中最小生成树之Kruskal算法&quot;&gt;&lt;/a&gt;图论中最小生成树之Kruskal算法&lt;/h1&gt;&lt;h2 id=&quot;1
+      
+    
+    </summary>
+    
+    
+      <category term="algorithm" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于不指定个数的输入问题</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/09/27/%E5%85%B3%E4%BA%8E%E4%B8%8D%E6%8C%87%E5%AE%9A%E4%B8%AA%E6%95%B0%E7%9A%84%E8%BE%93%E5%85%A5%E9%97%AE%E9%A2%98/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/09/27/关于不指定个数的输入问题/</id>
+    <published>2018-09-27T03:00:52.000Z</published>
+    <updated>2018-09-28T14:02:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="用到的知识"><a href="#用到的知识" class="headerlink" title="用到的知识"></a>用到的知识</h5><ul><li>getline()函数；</li><li>stringstream类；</li></ul><h1 id="getline-函数"><a href="#getline-函数" class="headerlink" title="getline()函数"></a>getline()函数</h1><p>c++中有两种getline()函数。</p><blockquote><p>第一种：在头文件<istream>中，是istream类的成员函数</istream></p><p>第二种：在头文件<string>中，是普通函数</string></p></blockquote><h2 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h2><blockquote><p>在<istream>中的getline()函数有两种重载形式：</istream></p><p>istream&amp; getline (char* s, streamsize n );</p><p>istream&amp; getline (char* s, streamsize n, char delim );</p></blockquote><p>用法：</p><p>从istream中读取至多n个字符(包含结束标记符)保存在s对应的数组中。即使还没读够n个字符，</p><p>如果遇到delim或 字数达到限制，则读取终止，delim都不会被保存进s对应的数组中。</p><h2 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h2><p>在<string>中的getline函数有四种重载形式。</string></p><blockquote><p>istream&amp; getline (istream&amp;  is, string&amp; str, char delim);</p><p>istream&amp; getline (istream&amp;  is, string&amp; str);</p><p>istream&amp; getline (istream&amp;&amp; is, string&amp; str, char delim);</p><p>istream&amp; getline (istream&amp;&amp; is, string&amp; str);</p></blockquote><p>用法和上第一种类似，但是 <code>读取的istream是作为参数is传进函数的。读取的字符串保存在string类型的str中。</code></p><p>函数的变量：</p><blockquote><p>is    ：表示一个输入流，例如cin。</p><p>str   ：string类型的引用，用来存储输入流中的流信息。</p><p>delim ：char类型的变量，所设置的截断字符；在不自定义设置的情况下，遇到’\n’，则终止输入。</p></blockquote><h1 id="stringstream类"><a href="#stringstream类" class="headerlink" title="stringstream类"></a>stringstream类</h1><p>C++中标准IO库有三大类 </p><blockquote><p>iostream :  支持对标准输入输出设备（键盘，显示器）的读写；</p><p>fstream: 支持对文件的读写；</p><p>stringstream: 支持对string 对象更灵活的处理;</p></blockquote><p><code>作用:类型转换,词句转换</code></p><p>一. stringstream 一般可以用来实现安全的数据类型转换:</p><p><code>以int 类型为例</code></p><ol><li><p>int 类型转string 类型</p><pre><code>  int a = 50;   string b;   stringstream ss;   ss &lt;&lt; a;   ss &gt;&gt; b;// 转换后 b=&quot;50&quot;;</code></pre></li></ol><ol><li><p>string 类型转int </p><pre><code>   int a ;   string b = &quot;100&quot;;   stringstream ss;   ss &lt;&lt; b;   ss &gt;&gt; a;// a= 100</code></pre></li></ol><ol><li><p>string 转wstring   (string -&gt; int -&gt; wstring)</p><p>   int a;<br>   string b = “100”;<br>   wstring c;<br>   stringstream ss;<br>   ss &lt;&lt; b;<br>   ss &gt;&gt; a;<br>   cout&lt;&lt;a&lt;&lt;endl;</p><p>   wstringstream ws;<br>   ws &lt;&lt; a;<br>   ws &gt;&gt; c;<br>   wcout&lt;&lt;c&lt;&lt;endl;</p></li></ol><p>此种转换有一定的局限性，只能用于string 内容为数字的转换；</p><p>二.  利用stringstream 实现句子与单个单词之间的转换；</p><ol><li><p>句子 转为单个的词</p><pre><code>string a =&quot;how old are you , dear ?&quot;;stringstream ss;ss &lt;&lt; a;string b;while(ss &gt;&gt; b){cout &lt;&lt;b&lt;&lt;endl;}</code></pre></li></ol><ol><li><p>单个的词拼接为句子</p><pre><code>stringstream ss;ss &lt;&lt; &quot;how&quot;&lt;&lt;&quot; &quot;&lt;&lt;&quot;old&quot;&lt;&lt;&quot; &quot;&lt;&lt;&quot;are&quot;&lt;&lt;&quot; &quot;&lt;&lt;&quot;you&quot;&lt;&lt;&quot; &quot;&lt;&lt;&quot;,&quot;&lt;&lt;&quot;dear&quot;&lt;&lt;&quot; &quot;&lt;&lt;&quot;?&quot;;string b;b = ss.str();cout&lt;&lt;b&lt;&lt;endl;</code></pre></li></ol><h1 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h1><pre><code>string line, word;getline(cin, line);  //将输入流cin以回车键截断，将截断的流的内容赋值给linestringstream stream(line);  //将line的内容转化为流输入到streamwhile(stream &gt;&gt; word)  //将流的内容以空格分割输入到word{    //Your code}</code></pre><blockquote></blockquote><pre><code>string line, word;getline(cin, line);stringstream stream(line);while(stream &gt;&gt; word){    //Your code}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;用到的知识&quot;&gt;&lt;a href=&quot;#用到的知识&quot; class=&quot;headerlink&quot; title=&quot;用到的知识&quot;&gt;&lt;/a&gt;用到的知识&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;getline()函数；&lt;/li&gt;
+&lt;li&gt;stringstream类；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 
+      
+    
+    </summary>
+    
+    
+      <category term="输入" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/%E8%BE%93%E5%85%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初识VPS之部署SS实现科学上网</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/28/%E5%88%9D%E8%AF%86VPS%E4%B9%8B%E9%83%A8%E7%BD%B2SS%E5%AE%9E%E7%8E%B0%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/28/初识VPS之部署SS实现科学上网/</id>
+    <published>2018-04-28T06:26:47.000Z</published>
+    <updated>2018-04-28T15:39:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>很久之前在就在知乎上无意中得知有VPS这么个东西，觉得很新奇很强大，但是种种原因没有深究下去</p><p>而今恰好女朋友抱怨现有VPN太慢，于是便有这次搭建SS的经历</p></blockquote><h1 id="科学上网教程"><a href="#科学上网教程" class="headerlink" title="科学上网教程"></a>科学上网教程</h1><h1 id="【一】选择购买VPS"><a href="#【一】选择购买VPS" class="headerlink" title="【一】选择购买VPS"></a>【一】选择购买VPS</h1><blockquote><p>国外的VPS提供商有好多，有名的有Vultr、Digital Ocean、Linode、搬瓦工（bandwagonhost），看了下都挺不错的，但是感觉vultr性价比比较高，<code>而且支持支付宝</code></p></blockquote><p><img src="https://i.imgur.com/HRa7SzC.png" alt=""></p><h2 id="在VULTR上购买VPS"><a href="#在VULTR上购买VPS" class="headerlink" title="在VULTR上购买VPS"></a>在VULTR上购买VPS</h2><ol><li><p>【注册】进入<a href="https://www.vultr.com/" target="_blank" rel="noopener">vultr</a>，走一遍注册流程</p><blockquote><p>如果愿意，也通过我的<a href="https://www.vultr.com/?ref=7408445" target="_blank" rel="noopener">邀请链接</a>进入【我会获得小奖励】</p></blockquote></li><li><p>【充值】注册登录后会进入个人面板，左边栏选择 “Billing” ，选择支付方式和金额，付款即可。<code>Vultr 现在支持支付宝，很方便</code></p></li><li><p>【安装VPS】选择 “Servers” ，点击右边蓝色的 “+” 添加 VPS。</p><p> 3.1 选择节点</p><p> 我选择了“Los Angelos”节点，理论上Tokyo离我们最近，但非常不稳定</p><p> <img src="https://i.imgur.com/smKT9E4.png" alt=""></p><p> 3.2 选择系统</p><p> 选择 “CenterOS 7×64” 系统。</p><p> 3.3 选择套餐</p><p> 最低 $2.5/mo 的套餐现在已经买不到了，一般自己用 $5/月 的每月有 1000G 流量也够用了，可以按个人需要选择。</p><p> 3.4 其他选项</p><p> 有 IPv6，私密，域名、标签等，无特殊需要全部默认即可。</p><p> 选好后点击右下角的 “Deploy Now” ，开始安装 VPS</p></li></ol><h1 id="【二】连接VPS"><a href="#【二】连接VPS" class="headerlink" title="【二】连接VPS"></a>【二】连接VPS</h1><blockquote><p>使用 ssh 工具连接我们的 VPS，Windows 推荐 xshell，Mac 可使用自带的终端</p><p>xshell <a href="pan.baidu.com/s/1hoH6qLZIx-cFw4WLtqMprw">网盘链接</a>    密码：p6dp</p></blockquote><h2 id="xshell连接VPS"><a href="#xshell连接VPS" class="headerlink" title="xshell连接VPS"></a>xshell连接VPS</h2><h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><ol><li><p>安装 xshell，打开软件；</p><p> 点击 “文件” —&gt; “新建” —&gt; “连接”，输入 “名称” 和 “主机” （即VPS ip）；</p><p> <img src="https://upload-images.jianshu.io/upload_images/3334975-8b44fc3c8867bc65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p></li><li><p>点击 “用户身份验证”，输入用户名（默认root）和密码。确认;</p></li></ol><pre><code>![](https://upload-images.jianshu.io/upload_images/3334975-9b36de7157fb5295.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</code></pre><ol><li><p>连接 VPS，接受并保存密钥；</p><p> <img src="https://upload-images.jianshu.io/upload_images/3334975-0cf8529d76f1aed1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p><p> <img src="https://upload-images.jianshu.io/upload_images/3334975-fc43d41d8efdbdd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p></li></ol><ol><li><p>出现 root@vultr:~# 即连接成功;</p><p> <img src="https://upload-images.jianshu.io/upload_images/3334975-d9ed760eb05a0993.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p></li></ol><h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><ol><li>打开终端，输入以下代码登录 VPS，其中 root 即用户名，将 ip 更改为 VPS 的 IP 地址，回车;</li></ol><pre><code>&gt; ssh root@ip</code></pre><ol><li><p>输入 yes 确认，粘贴密码，回车。需要提醒的是，密码输入时并不会显示出来，直接复制粘贴，回车即可。出    现 root@vultr:~# 即连接成功;</p><p> <img src="https://upload-images.jianshu.io/upload_images/3334975-99b0af53098e849c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p></li></ol><h1 id="【三】在VPS上搭建shadowsocks"><a href="#【三】在VPS上搭建shadowsocks" class="headerlink" title="【三】在VPS上搭建shadowsocks"></a>【三】在VPS上搭建shadowsocks</h1><ol><li>依次运行下面三行命令，如下图所示按要求输入相应信息。建议：端口选择大于 1000 的</li></ol><blockquote><p>wget –no-check-certificate -O shadowsocks.sh <a href="https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh" target="_blank" rel="noopener">https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</a></p><p>chmod +x shadowsocks.sh</p><p>./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</p></blockquote><p><img src="https://upload-images.jianshu.io/upload_images/3334975-c75b2f053feb1995.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p><ol><li>安装完成，把标红的连接信息记录下来，就可以关闭 xshell 了;</li></ol><p><img src="https://upload-images.jianshu.io/upload_images/3334975-8d4b8444b5e12e8b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p><h1 id="【四】优化SS的速度"><a href="#【四】优化SS的速度" class="headerlink" title="【四】优化SS的速度"></a>【四】优化SS的速度</h1><h2 id="TCP-BBR-拥塞控制算法"><a href="#TCP-BBR-拥塞控制算法" class="headerlink" title="TCP BBR 拥塞控制算法"></a>TCP BBR 拥塞控制算法</h2><blockquote><p>TCP BBR 是 Google 开源的 拥塞控制算法，类似锐速的单边加速工具。由于受到各方面限制，国外的vps速度不理想，偶尔有延迟、不稳定的现象出现。而bbr的作用，就是要解决这一问题。</p></blockquote><p>我们只需要在vps上安装即可，参考<a href="https://teddysun.com/489.html" target="_blank" rel="noopener">《一键安装最新内核并开启 BBR 脚本》</a>。</p><ol><li>使用root用户登录，运行以下命令：</li></ol><blockquote><p>wget –no-check-certificate <a href="https://github.com/teddysun/across/raw/master/bbr.sh" target="_blank" rel="noopener">https://github.com/teddysun/across/raw/master/bbr.sh</a></p><p>chmod +x bbr.sh</p><p>./bbr.sh</p></blockquote><ol><li>安装完成后，脚本会提示需要重启 VPS，输入 y 并回车后重启。重启后，执行命令：</li></ol><blockquote><p>lsmod | grep bbr</p></blockquote><p>返回值有 tcp_bbr 模块即说明bbr已启动。</p><p>TCP BBR要求Linux内核4.10以上，如果安装提示内核版本太低，去《一键安装最新内核并开启 BBR 脚本》查看升级内核方法）</p><p>BBR成功安装后，shadowsocks速度有明显提升，尽管不是每个网络都能看youtube1080P视频（笔者公司无压力，在家就不行），但浏览普通外国网站很畅通。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;很久之前在就在知乎上无意中得知有VPS这么个东西，觉得很新奇很强大，但是种种原因没有深究下去&lt;/p&gt;
+&lt;p&gt;而今恰好女朋友抱怨现有VPN太慢，于是便有这次搭建SS的经历&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;科学上网教程&quot;&gt;&lt;a hr
+      
+    
+    </summary>
+    
+    
+      <category term="VPS" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/VPS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OUR GALLERY</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/25/OUR-GALLERY/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/25/OUR-GALLERY/</id>
+    <published>2018-04-25T15:24:43.000Z</published>
+    <updated>2018-05-07T10:35:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Our-story"><a href="#Our-story" class="headerlink" title="Our story"></a>Our story</h1><h2 id="photoes"><a href="#photoes" class="headerlink" title="photoes"></a>photoes</h2><h3 id="太甜了♥"><a href="#太甜了♥" class="headerlink" title="太甜了♥"></a>太甜了♥</h3><p><code>【2018/4/25 23:33:59 】之前的~</code></p><p><img src="https://i.imgur.com/UjM9CTm.png" alt=""> </p><p><img src="https://i.imgur.com/dGdKlUU.png" alt=""></p><p><img src="https://i.imgur.com/oLXuoXO.png" alt=""></p><p><img src="https://i.imgur.com/jAt0ul8.png" alt=""></p><p><img src="https://i.imgur.com/55Aglpg.png" alt=""></p><p><img src="https://i.imgur.com/Dj2c5VO.png" alt=""></p><p><img src="https://i.imgur.com/W4r8s3c.png" alt=""></p><p><img src="https://i.imgur.com/kfWovNB.png" alt=""></p><p><img src="https://i.imgur.com/uqwazjU.png" alt=""></p><p><img src="https://i.imgur.com/HMmNZks.png" alt=""></p><p><img src="https://i.imgur.com/frLuiL9.jpg" alt=""></p><p><img src="https://i.imgur.com/ZhOyquS.jpg" alt=""></p><p><img src="https://i.imgur.com/qE3oZpe.jpg" alt=""></p><blockquote><p>好きSKX♥</p></blockquote><h2 id="—"><a href="#—" class="headerlink" title="—"></a>—</h2><p><code>【     2018/4/26 0:09:28  】(甜死了)</code></p><p><img src="https://i.imgur.com/B5L9ANV.png" alt=""></p><p><img src="https://i.imgur.com/WeyYNX6.jpg" alt=""></p><p><img src="https://i.imgur.com/bpD0Pdn.jpg" alt=""></p><p><img src="https://i.imgur.com/gydARAb.jpg" alt=""></p><p><img src="https://i.imgur.com/vgbn0wq.jpg" alt=""></p><h2 id="—-1"><a href="#—-1" class="headerlink" title="—"></a>—</h2><p><code>【2018/4/27 0:11:03 】</code></p><p><img src="https://i.imgur.com/RecUvnP.jpg" alt=""></p><p><img src="https://i.imgur.com/zRNVqjI.jpg" alt=""></p><p><img src="https://i.imgur.com/BlMiY5D.jpg" alt=""></p><p><img src="https://i.imgur.com/tMxWD4e.jpg" alt=""></p><p><img src="https://i.imgur.com/4yNHraC.jpg" alt=""></p><h2 id="—-2"><a href="#—-2" class="headerlink" title="—"></a>—</h2><p><code>【2018/4/27 23:00:23 】</code></p><blockquote><p>我说今晚月亮那么美，你说是的。</p></blockquote><p><img src="https://i.imgur.com/vszUoUd.jpg" alt=""></p><p><img src="https://i.imgur.com/X0rUsWP.jpg" alt=""></p><p><img src="https://i.imgur.com/PdhHXje.jpg" alt=""></p><p><img src="https://i.imgur.com/TWjtBKM.jpg" alt=""></p><p><img src="https://i.imgur.com/mHxsOiG.jpg" alt=""></p><p><img src="https://i.imgur.com/kVMTHV8.jpg" alt=""></p><p><img src="https://i.imgur.com/2SIx4T1.jpg" alt=""></p><p><img src="https://i.imgur.com/x3W1Eoj.jpg" alt=""></p><p><img src="https://i.imgur.com/IXokIF5.jpg" alt=""></p><p><img src="https://i.imgur.com/B6eUKhz.png" alt=""></p><p><img src="https://i.imgur.com/2hQp6NL.jpg" alt=""></p><p><img src="https://i.imgur.com/wkZp7M2.jpg" alt=""></p><p><img src="https://i.imgur.com/7UZrZMi.png" alt=""></p><p><img src="https://i.imgur.com/3ZVV8hk.jpg" alt=""></p><p><img src="https://i.imgur.com/Off9GOi.png" alt=""></p><h2 id="—-3"><a href="#—-3" class="headerlink" title="—"></a>—</h2><p><code>2018/4/29 9:18:11</code></p><blockquote><p>【这是昨天的开心，未来三天都没有宋老师(sad)】</p></blockquote><p><img src="https://i.imgur.com/EN3viCO.jpg" alt=""></p><p><img src="https://i.imgur.com/XJ1zbq1.jpg" alt=""></p><p><img src="https://i.imgur.com/60HULED.jpg" alt=""></p><p><img src="https://i.imgur.com/vc0RBxQ.jpg" alt=""></p><p><img src="https://i.imgur.com/7IPHzSZ.jpg" alt=""></p><p><img src="https://i.imgur.com/HHwJo4m.jpg" alt=""></p><p><img src="https://i.imgur.com/24GJQG7.jpg" alt=""></p><p><img src="https://i.imgur.com/AIsumfr.png" alt=""></p><p><img src="https://i.imgur.com/ZFgEe6D.png" alt=""></p><p><img src="https://i.imgur.com/3RlqK6e.png" alt=""></p><p><img src="https://i.imgur.com/L2wk4Gk.jpg" alt=""></p><p><img src="https://i.imgur.com/lIypd8k.png" alt=""></p><p><img src="https://i.imgur.com/GSX8uSR.png" alt=""></p><h2 id="—-4"><a href="#—-4" class="headerlink" title="—"></a>—</h2><p><code>2018/4/29-2018/5/4 0:15:55</code></p><blockquote><p>想来也有五天了，再次见到宋老师，更开心了</p></blockquote><p><img src="https://i.imgur.com/sW3HRkK.jpg" alt=""></p><p><img src="https://i.imgur.com/421bhKH.jpg" alt=""></p><p><img src="https://i.imgur.com/rL2DZOn.jpg" alt=""></p><p><img src="https://i.imgur.com/CYQVIla.jpg" alt=""></p><p><img src="https://i.imgur.com/SaT6IXI.jpg" alt=""></p><p><img src="https://i.imgur.com/BtMRqE3.jpg" alt=""></p><p><img src="https://i.imgur.com/x2DRvNG.jpg" alt=""></p><p><img src="https://i.imgur.com/nPu2MBZ.png" alt=""></p><p><img src="https://i.imgur.com/iHLVOTB.png" alt=""></p><p><img src="https://i.imgur.com/CeD8ysj.jpg" alt=""></p><p><img src="https://i.imgur.com/Rmz2COO.png" alt=""></p><p><img src="https://i.imgur.com/StYdEVs.jpg" alt=""></p><p><img src="https://i.imgur.com/aaYeMYU.jpg" alt=""></p><p><img src="https://i.imgur.com/vJFn8an.jpg" alt=""></p><p><img src="https://i.imgur.com/67ARAq1.jpg" alt=""></p><p><img src="https://i.imgur.com/eEAg9ef.jpg" alt=""></p><p><img src="https://i.imgur.com/ymC0uMv.png" alt=""></p><p><img src="https://i.imgur.com/8KGCLyH.png" alt=""></p><p><img src="https://i.imgur.com/CMM4OLG.png" alt=""></p><p><img src="https://i.imgur.com/PeGC44W.jpg" alt=""></p><p><img src="https://i.imgur.com/9VYGucJ.jpg" alt=""></p><p><img src="https://i.imgur.com/o70SdBL.jpg" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Our-story&quot;&gt;&lt;a href=&quot;#Our-story&quot; class=&quot;headerlink&quot; title=&quot;Our story&quot;&gt;&lt;/a&gt;Our story&lt;/h1&gt;&lt;h2 id=&quot;photoes&quot;&gt;&lt;a href=&quot;#photoes&quot; class=&quot;he
+      
+    
+    </summary>
+    
+    
+      <category term="sankexing" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/sankexing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于解析中文域名的解决方法</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/22/%E5%85%B3%E4%BA%8E%E8%A7%A3%E6%9E%90%E4%B8%AD%E6%96%87%E5%9F%9F%E5%90%8D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/22/关于解析中文域名的解决方法/</id>
+    <published>2018-04-22T05:00:23.000Z</published>
+    <updated>2018-04-23T04:34:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="【这里有一个坑】"><a href="#【这里有一个坑】" class="headerlink" title="【这里有一个坑】"></a>【这里有一个坑】</h1><blockquote><p>你为域名配置的DNS[域名服务器]必须是支持中文域名的！！</p></blockquote><h1 id="中文域名分两类"><a href="#中文域名分两类" class="headerlink" title="中文域名分两类"></a>中文域名分两类</h1><ul><li>一类是域名后缀为英文字母的国际中文域名和别国中文域名，比如：中文.com，中文.net，中文.biz，中文.cc，中文.hk，中文.tm，中文.tv，中文.tw；</li></ul><ul><li>一类是域名后缀为中文的纯中文国内中文域名，比如：中文域名.中国，中文域名.公司，中文域名.网络；</li></ul><h1 id="解析中文域名的解决方法"><a href="#解析中文域名的解决方法" class="headerlink" title="解析中文域名的解决方法"></a>解析中文域名的解决方法</h1><blockquote><p>因为我需要将中文域名绑定到我的博客GitHub Page页面，故主要解决跟我相似的问题，但是将中文域名解析到其他服务器上也是同样的原理的</p></blockquote><h2 id="解析中文域名原理"><a href="#解析中文域名原理" class="headerlink" title="解析中文域名原理"></a>解析中文域名原理</h2><p><strong>中文域名在解析的时候，需要先转换为 xn–fiq228c.com或xn–fiq228c.cn形式的ASCII码，这种编码称为PunyCode。</strong></p><p>纯中文域名不被标准的解析服务器支持，要实现对这种纯中文域名的正确访问，ISP需要做相应的修改，以便能够正确解析中文域名。</p><p>同时CNNIC也提供了专用服务器，用户只要将浏览器的DNS设置指向这台服务器，它同样可以完成对纯中文域名的正确解析。</p><p>另外，考虑到现在有些ISP还没有做修改，而有些用户又不方便将DNS设置指向CNNIC提供的服务器，纯中文域名<code>会被加上.cn后缀</code>，即对每一个纯中文域名同时有两种形式：纯中文域名和纯中文域名.CN， 如：”中文域名.网络”和”中文域名.网络.CN”。这样即使ISP还没有做相应的修改，用户也可以正确使用中文域名。</p><h2 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h2><p>【】【】【】【】【】【】【】【】【】【】【】</p><p>【】<code>将中文域名转换为Punycode标准编码的字符串</code>【】</p><p>【】【】【】【】【】【】【】【】【】【】【】</p><h2 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h2><ol><li>在这里进行<a href="http://www.webmasterhome.cn/tool/punycode.asp" target="_blank" rel="noopener">中文域名在线转码</a>，获得PunyCode编码；</li><li>将获得的PunyCode编码填入GitHub Page所在的仓库的<code>CNAME</code>文件中； </li><li>同步本地与云上的仓库，ok；</li></ol><h2 id="PureCode"><a href="#PureCode" class="headerlink" title="PureCode"></a>PureCode</h2><blockquote><p>英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。</p><p>中文域名在IIS或Apache中应如何设置主机头呢？如”中国站长之家.com”，</p><p>答案是：在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn–fiqsC146Ah4ex80Cro7A.com)便可。</p><p>新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码，而这种编码称为『punycode』。</p><p>因为经过 Nameprep处理过的国际化域名是以 Unicode 序列的形式表示的。但现有的 DNS系统只支持用 ASCII字符表示的域名，所以要对 Unicode 序列进行 ACE （ASCII-compatible encoding） 编码，把 Unicode序列表示的域名转换成 ASCII 字符串表示的ACE 域名。</p><p>PunyCode是一种专为国际化域名而设计的高效ACE 编码方式。它可以在Unicode序列和ASCII 字符串之间进行唯一的和可逆的转换。转换的过程中，Unicode 序列中的ASCII字符保持不变，国际化字符则用字母和数字来表示。它的实质是一种用数量有限的基本字符（字母和数字）来唯一地表示大字符集（Unicode）中的字符的通用算法。域名中的字符，包括 ASCII 码和 Unicode 码，都是作为整数进行处理。</p><p>PunyCode则是将一个经过Nameprep处理过的IDN，从一个8位的编码的形式转换为7位编码的形式。目前Internet DNS一向是7位ASCII编码的环境，经过这个PunyCode转码程序，便将IDN从一个8 位的IDN转换为与现有DNS环境兼容的编码。</p><p>在DNS服务器方面，需要将IDN以PunyCode的编码形式来设定。因为PunyCode本身就是一种7位的编码，与ASCII编码完全兼容，所以可适用设定于目前所有可用的DNS版本， 也就是说可以不需要为了设定PunyCode而重新安装BIND新版本。但是若是需要使用DNAME指令来设定资源记录（Resource Record），则需先提升为BIND9的版本。</p></blockquote><h2 id="Nameprep"><a href="#Nameprep" class="headerlink" title="Nameprep"></a>Nameprep</h2><blockquote><p>Nameprep 是“A Stringprep Profile for Internationalized Domain Names (IDN)”，它描述了如何准备一个多语种域名，包括对一个域名字段进行映射、正规化以及禁止性过滤等等操作。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;【这里有一个坑】&quot;&gt;&lt;a href=&quot;#【这里有一个坑】&quot; class=&quot;headerlink&quot; title=&quot;【这里有一个坑】&quot;&gt;&lt;/a&gt;【这里有一个坑】&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;你为域名配置的DNS[域名服务器]必须是支持中文域名的！！&lt;/p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="域名" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/%E5%9F%9F%E5%90%8D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ACM-Floyd&amp;Dijkstra最短路算法</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/09/ACM-Floyd-Dijkstra%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%AE%97%E6%B3%95/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/09/ACM-Floyd-Dijkstra最短路算法/</id>
+    <published>2018-04-09T10:51:00.000Z</published>
+    <updated>2018-04-09T12:40:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>如果一个图中带有“负权回路”那么这个图则没有最短路</p></blockquote><h1 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote><p>用于求任意两点之间的最短路程</p><p>概括就是，从 i 号顶点到 j 号点只经过前k号点的最短路程，实质上是一种“动态规划”的思想</p><p>参考链接： <a href="http://wiki.jikexueyuan.com/project/easy-learn-algorithm/floyd.html" target="_blank" rel="noopener">坐在马桶上学算法</a>【墙裂推荐】</p></blockquote><h2 id="核心代码【只有五行】"><a href="#核心代码【只有五行】" class="headerlink" title="核心代码【只有五行】"></a>核心代码【只有五行】</h2><pre><code>#include&lt;stdio.h&gt;int main(){    for(int k = 1;k&lt;=n;k++)    {        for(int i = 1;i&lt;=n;i++)        {            for(int j = 1;j&lt;=n;j++)            {                if(dis[i][j] &gt; dis[i][k] + dis[k][j])                {                    dis[i][j] = dis[i][k] + dis[k][j]                }            }        }    }}</code></pre><h2 id="个人见解"><a href="#个人见解" class="headerlink" title="个人见解"></a>个人见解</h2><ol><li>Floyd算法首先将每两个点之间的距离设为初始值；</li><li>然后再在相邻的两个点之间插入一个点，这是减小距离的唯一办法；</li><li>然后不断增加插入的点的个数；</li><li>【不过它的时间复杂度为n^3是个硬伤…不过有些数据小的题还是挺好用的】</li></ol><h2 id="在这里附上一道运用了Floyd算法的例题：-青云的机房组网方案（简单）"><a href="#在这里附上一道运用了Floyd算法的例题：-青云的机房组网方案（简单）" class="headerlink" title="在这里附上一道运用了Floyd算法的例题：  青云的机房组网方案（简单）"></a>在这里附上一道运用了Floyd算法的例题：  <a href="https://nanti.jisuanke.com/t/11132" target="_blank" rel="noopener">青云的机房组网方案（简单）</a></h2><blockquote><p>互质：公约数只有1的两个整数，叫做互质整数。公约数只有1的两个自然数，叫做互质自然数，后者是前者的特殊情形。</p><p>最大公约数：最大公因数，也称最大公约数，指两个或多个整数共有约数中最大的一个。a，b的最大公约数记为（a，b）。求最大公约数有多种方法，常见的有质因数分解法、辗转相除法等等。</p><p>公因数：如果 a,b 是非零整数，而整数 p 同时是 a,b 的因数，我们便把 p 叫做 a,b 的公因数。</p><p>哈哈这些概念我现在才搞清楚…</p></blockquote><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><pre><code>青云现在要将 nn 个机房连成一个互相连通的网络。工程师小王设计出一个方案：通过在 nn 个机房之间铺设 n-1n−1 条双向的光纤，将所有的机房连接。可以假设数据在两个机房之间的光纤传输需要 11 单位时间。每个机房 ii 有一个初始值 a_ia i​     ，当两个机房的初始值之间互质时，我们认为这两个机房之间的传输性能是非常重要的。请帮小王计算出所有数值互质的机房对之间的传输时间之和。输入格式第一行输入一个正整数 nn，第二行输入 nn 个正整数 a_1...a_na 1​     ...a n​     ，表示 nn 个机房的初始值。接下来输入 n-1n−1 行，每行输入两个数 a,ba,b，表示机房 aa 和机房 bb 之间有一条双向网络管道。对于简单版本：n \leq 500n≤500，1 \leq a_i \leq 501≤a i​     ≤50；对于中等版本：n \leq 10000n≤10000， 1 \leq a_i \leq 5001≤a i​     ≤500；对于困难版本：n \leq 100000n≤100000，a_i \leq 100000a i​     ≤100000。输出格式输出一行，表示所有初始值互质的机房对的传输时间和。样例输入41 2 3 41 22 33 4样例输出8</code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h3><pre><code>#include&lt;stdio.h&gt;#include&lt;algorithm&gt;#define INF 0x3f3f3f3f #define maxn 505using namespace std;int gcd(int a,int b){   if(a&lt;b) swap(a,b);    if(b == 0)    {        return a;    }    else    {        return gcd(b,a % b);    }}int main(){    int n,ans = 0;    int x,y;    int init[maxn];    int dis[maxn][maxn];    scanf(&quot;%d&quot;,&amp;n);    for(int i = 1;i&lt;=n;i++)    {        scanf(&quot;%d&quot;,&amp;init[i]);    }    for(int i = 1;i&lt;=n;i++)    {        for(int j = 1;j&lt;=n;j++)        {            if(i == j)            {                dis[i][j] = 0;            }            else            {                dis[i][j] = INF;            }        }    }    for(int i = 1;i&lt;n;i++)    {        scanf(&quot;%d%d&quot;,&amp;x,&amp;y);        dis[x][y] = dis[y][x] = 1;    }    /***********Floyd*********/    for(int k = 1;k&lt;=n;k++)    {        for(int i = 1;i&lt;=n;i++)        {            for(int j = 1;j&lt;=n;j++)            {                if(dis[i][j] &gt; dis[i][k] + dis[k][j])                {                    //每次更新dis[i][j]使其达到最小值                    dis[i][j] = dis[i][k] + dis[k][j];                }            }        }    }    /***********Floyd*********/    for(int i = 1;i&lt;=n;i++)    {        for(int j = i + 1;j&lt;=n;j++)        {            if(gcd(init[i],init[j]) == 1)            {                ans += dis[i][j];            }        }    }    printf(&quot;%d\n&quot;,ans);}</code></pre><h1 id="Dijsktra算法"><a href="#Dijsktra算法" class="headerlink" title="Dijsktra算法"></a>Dijsktra算法</h1><h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><blockquote><p>单源最短路径</p></blockquote><ol><li>先找出距离源点最近的一个点，更新dis[2];</li><li>以2号点为基准，找到它的所有出边，判断dis[3] &gt; dis[2] + next[2][i],并更新dis[3];</li><li>以此类推；</li></ol><h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><pre><code>#include&lt;stdio.h&gt;#define maxn 1024#define INF 0x3f3f3f3fint n,m;//点和边int book[maxn];int next[maxn][maxn];int dis[maxn];int main(){    /***********Dijsktra******************\    for(int i = 1;i&lt;=n-1;i++)    {        int minm = INF;        //找到距离源点最近的点        for(int j = 1;j&lt;=n;j++)        {            if(book[j] == 0 &amp;&amp; dis[j] &lt; minm)            {                minm = dis[j];                //坐标点更换                int nowNode = j;            }        }        book[nowNode] = 1;//标记        for(int k = 1;k&lt;=n;k++)        {            //判断有路可走            if(next[nowNode][k] &lt; INF)            {                if(dis[k] &gt; dis[nowNode] + next[nowNode][k])                {                    dis[k] = dis[nowNode] + next[nowNode][k];                }            }        }    }    /***********Dijsktra******************\}</code></pre><blockquote><p>时间复杂度为n^2，比起Floyd还是优化了不少的，但是还可以优化</p><p>【立个flag】下一篇写堆(heap)和对Dijsktra的优化</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;如果一个图中带有“负权回路”那么这个图则没有最短路&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;Floyd算法&quot;&gt;&lt;a href=&quot;#Floyd算法&quot; class=&quot;headerlink&quot; title=&quot;Floyd算法&quot;&gt;&lt;/a&gt;Floyd
+      
+    
+    </summary>
+    
+    
+      <category term="algorithm" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本子的休眠Vs睡眠</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/07/%E7%94%B5%E8%84%91%E7%9A%84%E4%BC%91%E7%9C%A0vs%E7%9D%A1%E7%9C%A0/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/07/电脑的休眠vs睡眠/</id>
+    <published>2018-04-07T13:27:47.000Z</published>
+    <updated>2018-04-07T13:48:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="我的本子-windows机-已经快一个星期没有关机了…"><a href="#我的本子-windows机-已经快一个星期没有关机了…" class="headerlink" title="我的本子[windows机]已经快一个星期没有关机了…"></a>我的本子[windows机]已经快一个星期没有关机了…</h1><blockquote><p>一周来，因为学习算法等事情，打开盖子时将我的工作台恢复至离开时的状态对提高效率极为有效，然鹅，我有点担心我的本子会不会不堪重负…故google了一番，听取各路大佬的意见，最终决定–每次都保持【睡眠】状态~~</p><p>我要是mac或者linux我就直接合上盖子就走人了…可惜…</p></blockquote><h1 id="笔记本的睡眠和休眠有什么区别？"><a href="#笔记本的睡眠和休眠有什么区别？" class="headerlink" title="笔记本的睡眠和休眠有什么区别？"></a><a href="http://ask.zol.com.cn/q/24571.html" target="_blank" rel="noopener">笔记本的睡眠和休眠有什么区别？</a></h1><blockquote><p>膜拜大佬<a href="http://ask.zol.com.cn/me/hellozol2011/" target="_blank" rel="noopener">@疯狂的制帽匠</a> </p></blockquote><h2 id="1-关于状态问题"><a href="#1-关于状态问题" class="headerlink" title="1.关于状态问题"></a>1.关于状态问题</h2><p><strong>“睡眠”是一种节能状态，当您希望再次开始工作时，可使计算机快速恢复全功率工作（通常在几秒钟之内）。让计算机进入睡眠状态就像暂停 DVD 播发机一样：计算机会立即停止工作，并做好继续工作的准备。</strong></p><p><strong>“休眠”是一种主要为便携式计算机设计的电源节能状态。睡眠通常会将工作和设置保存在内存中并消耗少量的电量，而休眠则将打开的文档和程序保存到硬盘中，然后关闭计算机。在 Windows 使用的所有节能状态中，休眠使用的电量最少。对于便携式计算机，如果您知道将有很长一段时间不使用它，并且在那段时间不可能给电池充电，则您应使用休眠模式。</strong></p><p><strong>“混合睡眠”主要是为台式计算机设计的。混合睡眠是睡眠和休眠的组合 - 它将所有打开的文档和程序保存到内存和硬盘上，然后让计算机进入低耗能状态，以便可以快速恢复工作。这样，如果发生电源故障，Windows 可从硬盘中恢复您的工作。如果打开了混合睡眠，让计算机进入睡眠状态的同时，计算机也自动进入了混合睡眠状态。在台式计算机上，混合睡眠通常默认为打开状态。</strong></p><h3 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h3><p><strong>台式机的普通睡眠（混合式睡眠关闭），这和xp下的待机是一个意思了，就是除内存以外所有设备都断电，内存只上直流电源（没有时钟输入，这个很重要），唤醒的时候恢复对其它设备的供电，并返回工作状态。</strong></p><h3 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h3><p><strong>台式机的休眠，xp下也有这个功能，把内存里的所有数据存储到硬盘的一个连续空间里，并切断所有电源。在恢复时，将硬盘里临时存储的内存数据恢复到内存里，并返回工作状态。</strong></p><h4 id="1-2-1"><a href="#1-2-1" class="headerlink" title="1.2.1"></a>1.2.1</h4><p><strong>在电源计划里，对于进入睡眠和进入休眠的时间有分别的设定，当然按照正常人的逻辑前者要小于后者。所以当进入睡眠后一直没有唤醒，直到休眠定时器到点，则系统会自动把内存数据存入硬盘，断开所有设备电源，进入休眠状态。</strong></p><h4 id="1-2-2"><a href="#1-2-2" class="headerlink" title="1.2.2"></a>1.2.2</h4><p><strong>混合式睡眠，即当混合式睡眠开启后。开始睡眠的那一刻，内存的数据就同时被存入了硬盘中，而且内存仍然上电，进入正常的睡眠状态。若发生意外断电，则下次启动时从硬盘上的数据恢复到内存里，即休眠的原理。当然，如果睡眠到休眠定时器触发，也会自动转入休眠状态，这时候就不用再进行数据转存了，因为之前已经做过了。所以说混合式睡眠=睡眠+休眠，这样可以防止突然断电导致数据丢失。</strong></p><h3 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h3><p><strong>笔记本的睡眠和休眠，笔记本的运行机制和台式机有所区别。在以电池供电的睡眠状态时，若电池即将耗尽，系统也会自动将内存数据保存入硬盘并关闭电源，进入休眠状态。这样一来，有两种事件可以触发笔记本由睡眠转入休眠：电源计划里进入休眠的时间到，或者电池供电时电池即将耗尽。</strong></p><h4 id="1-3-1"><a href="#1-3-1" class="headerlink" title="1.3.1"></a>1.3.1</h4><p><strong>当笔记本接交流电源时进入睡眠状态，之后再断开交流电源。则何时由睡眠转入休眠，仍然由电源计划里的“接交流电源时”的计划时间决定。就是说休眠定时器在进入睡眠的时候就设定好了，不会因为后来拔掉交流电源，而将定时器设置成“用电池供电”的计划。</strong></p><h4 id="1-3-2"><a href="#1-3-2" class="headerlink" title="1.3.2"></a>1.3.2</h4><p><strong>关于笔记本的混合式睡眠，大家可能会注意到。台机装好系统后，默认是混合式睡眠开启，为了防止进入睡眠后突然断电带来的数据丢失。而笔记本因为有电池供电，不存在突然断电的情况。即使电池缓慢的耗尽，这也是可预兆的，系统会在电池即将耗尽时将数据转存入硬盘进入休眠状态。</strong></p><h2 id="2-关于时间问题"><a href="#2-关于时间问题" class="headerlink" title="2.关于时间问题"></a>2.关于时间问题</h2><p><strong>这个应该是争论的焦点，也是我想说明的重点。毫无疑问，按照时间排序，睡眠是最快的，其次是休眠，最慢的是关机和开机冷启动。大部分持时间理由反对的人，基本都是说“我直接冷启动也很快，你们启动慢是因为你们不懂优化”。我在这里先明确一个概念：</strong></p><h3 id="2-1"><a href="#2-1" class="headerlink" title="2.1"></a>2.1</h3><p><strong>工作状态，这个概念非常重要，就是指你能立即开始工作的系统状态。我想对于很多人来说，有些程序是必须在运行的，比如qq、msn、mail等通讯软件，比如一些office文档（word、excel、ppt），比如听音乐的软件，比如各种专业软件，比如打开了几个文件夹（资源管理器）。我只是比如，每个人都会有自己的工作状态，自己工作（这里是广义的意思，包括娱乐游戏）状态会有一群打开着的软件、系统的各项设置。所以，判断一个方案速度是否快，要看它进入工作状态的时间，而非纯粹的启动时间。</strong></p><h3 id="2-2"><a href="#2-2" class="headerlink" title="2.2"></a>2.2</h3><p><strong>启动状态和工作状态，某些人只算了一面帐，而忽略了另外一面。冷启动很慢，因为启动的时候要加载大量的dll，加载大量的自启动程序。关于减少启动的加载项来优化启动速度的方法网上到处都是，但是你们有没想过一个问题，羊毛出在羊身上。结果是越通过减少启动项来加快启动速度，启动状态和工作状态就相差的越远，你还是要花很长的时间从启动状态进入工作状态。比如你把qq从启动项里删了，假设你开电脑就必须要用qq，难道你自己手工打开qq不要花时间的？或是说你觉得你手动点击打开比它自启动还要快？</strong></p><h3 id="2-3"><a href="#2-3" class="headerlink" title="2.3"></a>2.3</h3><p><strong>睡眠唤醒的时间优势，用一个简单的例子就可以说明。设想你在写一篇文章，打开了2个word文档和1个ppt，开了3-5个网页来查资料，同时开了qq、msn、mail进行通讯，还有放音乐的软件，还打开了若干个文件夹，可能还有一些专业软件比如visual studio。现在你要睡觉了，明天起来接着写。那些说自己优化了开机的，试验一下把机器关机，然后冷启动，进入系统以后把这些软件全部打开进入工作状态，看看要多少时间。纵然你启动优化的再好，配置再nb，我不相信你可以在2分钟内进入工作状态，至少我的电脑需要5分钟。但是从睡眠唤醒，进入工作状态只要10秒不到，这个估计还保守了，都包括进了输入用户密码以及可能需要重新连接adsl的时间，10秒也足够了。10秒内就可以立即开始工作！</strong></p><h4 id="2-3-1"><a href="#2-3-1" class="headerlink" title="2.3.1"></a>2.3.1</h4><p><strong>其实上例是具有普遍意义了，这是一种习惯的变迁。人们以前习惯了在关闭电脑前保存所有文档，结束所有程序，然后离开。而在睡眠机制下，倡导大家在任何想离开的时侯直接按下睡眠键，在恢复时就可以立即回到原先的状态。把开启和关闭的时间都省略了，这就是睡眠的精髓所在。例中还包含了其它的因素，比如冷启动后重新打开那些网页要花的时间，甚至是找到那些网页（快捷一点的办法是从历史记录里找，或者已经事先加入了收藏夹）所要花的时间，而睡眠唤醒后就可以直接阅读已经打开了的网页了。再有甚者，假设你要睡觉了、或者宿舍要断电了，你玩游戏还没打到存盘点怎么办？你舍得关机吗？休眠可以完美的解决这个问题。引入睡眠和休眠的精髓，就是瞬间保留你的工作状态，让你回来时可以立即恢复进入工作，不仅是节省时间，还要节省人的操作。如果仅仅是把它当作一种启动的方式，那误解就大了。</strong></p><h3 id="2-4"><a href="#2-4" class="headerlink" title="2.4"></a>2.4</h3><p><strong>休眠与冷启动，同样是从硬盘加载，休眠恢复的速度仍然要比冷启动快上很多，尤其是你的工作状态复杂的时候。原因很简单，硬盘的连续读写速度非常快，而随机读写能力差劲。从冷启动到工作状态硬盘要到处读取dll、到处加载软件、到处加载文档……而从休眠恢复，是从硬盘上连续的空间里读取数据恢复到内存里，所以速度很快。仍然以2.3节为例，2g内存的电脑，若是从休眠恢复，包含上开机自检和输入密码等时间，花销也不会超过60秒。</strong></p><h2 id="3-关于元件损耗和能源问题"><a href="#3-关于元件损耗和能源问题" class="headerlink" title="3.关于元件损耗和能源问题"></a>3.关于元件损耗和能源问题</h2><p><strong>这算是是第二个主要争论的焦点了，实际上其中也存在了很多的误解，其实只要稍微学过一些电子学，其中的道理就很容易明白了。休眠和关机都是不需要任何电源的，而上节已经说明休眠都要比关机好上许多，本节比较的就是睡眠和休眠的关系。</strong></p><h3 id="3-1"><a href="#3-1" class="headerlink" title="3.1"></a>3.1</h3><p><strong>静态功耗与额定功率，一般来说一块芯片要工作，需要一个直流电源，还需要一个时钟脉冲输入。cpu需要外部输入一定频率的时钟，这个频率就叫外频，而cpu内部会自动调节核心频率等于这个外频的若干倍，就是倍频了。内存也有其工作频率，什么ddr667、ddr800指的就是该内存的工作频率为333MHz和400MHz，因为ddr是在时钟的上升沿和下降沿分别进行了一次数据读写，所以它的时钟频率是其数据频率的一半。有一个概念很重要，在系统电源配置里，说为节能关闭了某设备，其实是指关闭了这个设备的时钟控制，直流电源并没有切断。芯片在直流电源接入而没有时钟的情况下的耗电量叫做该芯片的静态功耗，它是非常小的，与其额定功率（动态功耗）比完全可以忽略不计。</strong></p><h3 id="3-2"><a href="#3-2" class="headerlink" title="3.2"></a>3.2</h3><p><strong>睡眠状态下的功耗，睡眠状态下，一般来说除内存外其他设备的直流电源都被切断了，如果打开了usb唤醒功能，那么usb上是有电的。这样的情况下，实际功耗就只有内存的静态功耗，其实这是非常小的。一般的笔记本电池续航，如果只是上网处理文档之类的，大概用3个小时左右。但是用来睡眠的话，上次我睡眠了2天半，恢复起来看还有78%的电量。3小时用光电池，50小时只用了20%，区别就是这样。</strong></p><h3 id="3-3"><a href="#3-3" class="headerlink" title="3.3"></a>3.3</h3><p><strong>元件损耗问题，这个其实和上述差不多，芯片元件的损耗也主要发生在时钟工作时，在静态的损耗同样可以忽略不计。至于休眠和冷启动硬盘损耗的比较，都不用我说，自己去听听硬盘的声音和持续时间上的区别吧。</strong></p><h2 id="4-我的观点和建议"><a href="#4-我的观点和建议" class="headerlink" title="4.我的观点和建议"></a>4.我的观点和建议</h2><p><strong>文章开头我就表明了我的看法，现在就是考虑如何选择休眠与睡眠的关系。简单的道理，就是离开时间过长就用休眠，不是太长就用睡眠。分界线在哪里，我的经验是24小时，如果24小时内还要来用电脑，就睡眠吧，否则就休眠，这个尺度大家可以根据自己的经验来把握。像那种暂时离开（吃饭、睡觉）是最适合用睡眠的pb54</strong> </p><h3 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h3><p><strong>关于混合式睡眠，台式机还是建议开启吧，为了防止意外发生。开启混合式睡眠只会影响到进入睡眠的时间，恢复时间不受影响。笔记本没有开启的必要。</strong></p><h3 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h3><p><strong>电源计划，这个非常重要，强烈建议大家都要根据各人的情况详细设置各个项目，例如关闭监视器的时间、进入睡眠的时间以及进入休眠的时间等。还有各个按钮的作用也要设置好，我的习惯（仅供参考）是：对于笔记本，盖上盖子是睡眠，开始菜单那的按钮也是睡眠，机子上的电源按钮是休眠；对于台式机，开始菜单那是睡眠，主机上电源按钮是休眠；至于关机和重新启动，用的几率极小，要用时从开始旁边的关机菜单里点。</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;我的本子-windows机-已经快一个星期没有关机了…&quot;&gt;&lt;a href=&quot;#我的本子-windows机-已经快一个星期没有关机了…&quot; class=&quot;headerlink&quot; title=&quot;我的本子[windows机]已经快一个星期没有关机了…&quot;&gt;&lt;/a&gt;我的本子[
+      
+    
+    </summary>
+    
+    
+      <category term="有趣的芝士" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/%E6%9C%89%E8%B6%A3%E7%9A%84%E8%8A%9D%E5%A3%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2018-DMU-ACM校赛感想</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/07/2018-DMU-ACM%E6%A0%A1%E8%B5%9B%E6%84%9F%E6%83%B3/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/07/2018-DMU-ACM校赛感想/</id>
+    <published>2018-04-07T09:25:43.000Z</published>
+    <updated>2018-04-07T10:24:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="菜鸡说的就是我了"><a href="#菜鸡说的就是我了" class="headerlink" title="菜鸡说的就是我了"></a>菜鸡说的就是我了</h1><hr><ol><li>题目挺正常的</li><li>但就是过不了测试数据☹</li><li>和队友的分工也存在问题</li><li>还是自己太菜了</li><li>努力，奋斗</li><li>先定个小目标【FLAG】：在<a href="https://vjudge.net/" target="_blank" rel="noopener">Virtual Judge</a>上<code>【百题斩】</code></li></ol><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;菜鸡说的就是我了&quot;&gt;&lt;a href=&quot;#菜鸡说的就是我了&quot; class=&quot;headerlink&quot; title=&quot;菜鸡说的就是我了&quot;&gt;&lt;/a&gt;菜鸡说的就是我了&lt;/h1&gt;&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;题目挺正常的&lt;/li&gt;
+&lt;li&gt;但就是过不了测试数据☹&lt;/li&gt;
+&lt;l
+      
+    
+    </summary>
+    
+    
+      <category term="杂念" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/%E6%9D%82%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ACM-Dfs搜索-迷宫问题 POJ - 3984</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/ACM-dfs%E6%90%9C%E7%B4%A2-%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98-POJ-3984/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/ACM-dfs搜索-迷宫问题-POJ-3984/</id>
+    <published>2018-04-06T15:41:33.000Z</published>
+    <updated>2018-04-06T15:46:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="我又来刷水题了…"><a href="#我又来刷水题了…" class="headerlink" title="我又来刷水题了…"></a>我又来刷水题了…</h1><blockquote><p><a href="https://vjudge.net/problem/POJ-3984" target="_blank" rel="noopener">vj原题</a></p></blockquote><h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p> 定义一个二维数组： </p><pre><code>int maze[5][5] = {    0, 1, 0, 0, 0,    0, 1, 0, 1, 0,    0, 0, 0, 0, 0,    0, 1, 1, 1, 0,    0, 0, 0, 1, 0,};</code></pre><p>它表示一个迷宫，其中的1表示墙壁，0表示可以走的路，只能横着走或竖着走，不能斜着走，要求编程序找出从左上角到右下角的最短路线。</p><p>Input</p><pre><code>一个5 × 5的二维数组，表示一个迷宫。数据保证有唯一解。</code></pre><p>Output</p><pre><code>左上角到右下角的最短路径，格式如样例所示。</code></pre><p>Sample Input</p><pre><code>0 1 0 0 00 1 0 1 00 0 0 0 00 1 1 1 00 0 0 1 0</code></pre><p>Sample Output</p><pre><code>(0, 0)(1, 0)(2, 0)(2, 1)(2, 2)(2, 3)(2, 4)(3, 4)(4, 4)</code></pre><h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><pre><code>#include&lt;stdio.h&gt;//#include&lt;queue&gt;//using namespace std;int maze[5][5];struct node{    int x,y,pre;}q[100];//queue &lt;node&gt; que;void output(int i){    if(q[i].pre != -1)    {        output(q[i].pre);        printf(&quot;(%d, %d)\n&quot;,q[i].x,q[i].y);    }}void bfs(int x,int y){    int dx[4] = {1,-1,0,0};    int dy[4] = {0,0,-1,1};    int front = 0;    int rear = 1;    q[front].x = x;    q[front].y = y;    q[front].pre = -1;    //que.push(q[front]);    while(front &lt; rear)    {        for(int i = 0;i&lt;4;i++)        {            int nx = q[front].x + dx[i];            int ny = q[front].y + dy[i];            //if(nx &gt;= 0 &amp;&amp; nx &lt; 5 &amp;&amp; ny &gt;= 0  &amp;&amp; ny &lt;5 &amp;&amp; maze[nx][ny])            if(nx&lt;0||nx&gt;=5||ny&lt;0||ny&gt;=5||maze[nx][ny])                continue;            else            {                maze[nx][ny] = 1;                q[rear].x = nx;                q[rear].y = ny;                q[rear].pre = front;                //que.push(q.[rear]);                rear++;            }            if(nx == 4 &amp;&amp; ny == 4)            {                output(front);            }        }        front++;    }}int main(){    for(int i = 0;i&lt;5;i++)    {        for(int j = 0;j&lt;5;j++)        {            scanf(&quot;%d&quot;,&amp;maze[i][j]);        }    }    printf(&quot;(0, 0)\n&quot;);    bfs(0,0);    printf(&quot;(4, 4)\n&quot;);}</code></pre><blockquote><p>这题没啥坑……</p></blockquote><p><code>明天校赛加油💪</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;我又来刷水题了…&quot;&gt;&lt;a href=&quot;#我又来刷水题了…&quot; class=&quot;headerlink&quot; title=&quot;我又来刷水题了…&quot;&gt;&lt;/a&gt;我又来刷水题了…&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://vjudge.net/probl
+      
+    
+    </summary>
+    
+    
+      <category term="algorithm" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++编译出错:error: &#39;Queue&#39; Does Not Name a Type</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/C-%E7%BC%96%E8%AF%91%E5%87%BA%E9%94%99-error-queue-does-not-name-a-type/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/C-编译出错-error-queue-does-not-name-a-type/</id>
+    <published>2018-04-06T13:14:44.000Z</published>
+    <updated>2018-04-06T13:19:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用cdde-blocks时编译出错"><a href="#使用cdde-blocks时编译出错" class="headerlink" title="使用cdde::blocks时编译出错"></a>使用cdde::blocks时编译出错</h1><hr><blockquote><p>好吧原谅我…我还是个孩子 </p></blockquote><hr><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>在头文件开头加上如下代码：</p><pre><code>#include&lt;queue&gt;using namespace std;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;使用cdde-blocks时编译出错&quot;&gt;&lt;a href=&quot;#使用cdde-blocks时编译出错&quot; class=&quot;headerlink&quot; title=&quot;使用cdde::blocks时编译出错&quot;&gt;&lt;/a&gt;使用cdde::blocks时编译出错&lt;/h1&gt;&lt;hr&gt;
+&lt;b
+      
+    
+    </summary>
+    
+    
+      <category term="C/C++编译问题" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/C-C-%E7%BC%96%E8%AF%91%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ACM-Dfs搜索-Oil Deposits HDU - 1241</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/ACM-dfs%E6%90%9C%E7%B4%A2-Oil-Deposits-HDU-1241/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/ACM-dfs搜索-Oil-Deposits-HDU-1241/</id>
+    <published>2018-04-06T08:47:45.000Z</published>
+    <updated>2018-04-06T09:04:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Oil-Deposits-HDU-1241"><a href="#Oil-Deposits-HDU-1241" class="headerlink" title="Oil Deposits HDU - 1241"></a>Oil Deposits HDU - 1241</h1><blockquote><p><a href="https://vjudge.net/problem/HDU-1241" target="_blank" rel="noopener">vj原题链接</a></p></blockquote><h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><blockquote><p>The GeoSurvComp geologic survey company is responsible for detecting underground oil deposits.<br>GeoSurvComp works with one large rectangular region of land at a time, and creates a grid that divides the land into numerous square plots.<br>It then analyzes each plot separately, using sensing equipment to determine whether or not the plot contains oil.<br>A plot containing oil is called a pocket.<br>If two pockets are adjacent, then they are part of the same oil deposit.<br>Oil deposits can be quite large and may contain numerous pockets.<br>Your job is to determine how many different oil deposits are contained in a grid. </p><p>Input</p><pre><code>The input file contains one or more grids. Each grid begins with a line containing m and n, the number of rows and columns in the grid, separated by a single space. If m = 0 it signals the end of the input; otherwise 1 &lt;= m &lt;= 100 and 1 &lt;= n &lt;= &gt;100. Following this are m lines of n characters each (not counting the end-of-line characters). Each character corresponds to one plot, and is either `*&apos;, representing the absence of oil, or `@&apos;, representing an oil pocket.</code></pre><p>Output</p><pre><code>For each grid, output the number of distinct oil deposits. Two different pockets are part of the same oil deposit if they are adjacent horizontally, vertically, or diagonally.An oil deposit will not contain more than 100 pockets. </code></pre><p>Sample Input</p><pre><code>1 1*3 5*@*@***@***@*@*1 8@@****@*5 5 ****@*@@*@*@**@@@@*@@@**@0 0 </code></pre><p>Sample Output</p><pre><code>0   122</code></pre></blockquote><h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><pre><code>#include&lt;stdio.h&gt;#define maxn 1024char field[maxn][maxn];//bool book[maxn[maxn];int n,m;void dfs(int x,int y){    field[x][y] = &apos;*&apos;;    //循环遍历移动的方向    for(int dx = -1;dx &lt;= 1;dx++)    {        for(int dy = -1;dy &lt;= 1;dy++)        {                int nx = x + dx;                int ny = y + dy;                //不能越界，且判断是否移动到的点为&apos;w&apos;                if(nx &gt;= 0 &amp;&amp; ny &gt;= 0 &amp;&amp; nx &lt;= n &amp;&amp; ny &lt;= m &amp;&amp; field[nx][ny] == &apos;@&apos;)                    dfs(nx,ny);        }    }}int main(){    while(scanf(&quot;%d%d&quot;,&amp;n,&amp;m) == 2 &amp;&amp; n &amp;&amp;m)    {        for(int i = 0;i&lt;n;i++)        {            scanf(&quot;%s&quot;,&amp;field[i]);        }        //memset(book,false,sizeof(book));        int ans = 0;        for(int i = 0;i&lt;n;i++)        {            for(int j = 0;j&lt;m;j++)            {                if(field[i][j] == &apos;@&apos;)                {                    dfs(i,j);                    ans++;                }            }        }        printf(&quot;%d\n&quot;,ans);    }}</code></pre><h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><blockquote><ol><li>很不幸……我又犯了<code>Presentation Error</code>……又是最后的结果输出时忘记加上<code>\n</code>了</li><li>这题简单，与<a href="https://vjudge.net/contest/199871#problem/A" target="_blank" rel="noopener">A - Lake Counting POJ - 2386</a>简直一摸一样，代码都几乎不用改，就是字符不同而已……</li></ol></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Oil-Deposits-HDU-1241&quot;&gt;&lt;a href=&quot;#Oil-Deposits-HDU-1241&quot; class=&quot;headerlink&quot; title=&quot;Oil Deposits HDU - 1241&quot;&gt;&lt;/a&gt;Oil Deposits HDU - 12
+      
+    
+    </summary>
+    
+    
+      <category term="algorithm" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ACM-Dfs搜索-棋盘问题</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/ACM-dfs%E6%90%9C%E7%B4%A2-%E6%A3%8B%E7%9B%98%E9%97%AE%E9%A2%98/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/06/ACM-dfs搜索-棋盘问题/</id>
+    <published>2018-04-06T07:52:49.000Z</published>
+    <updated>2018-04-06T08:16:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="POJ-1321-棋盘问题"><a href="#POJ-1321-棋盘问题" class="headerlink" title="POJ 1321-棋盘问题"></a>POJ 1321-棋盘问题</h1><blockquote><p><a href="https://vjudge.net/problem/POJ-1321" target="_blank" rel="noopener">vj原题链接</a></p></blockquote><h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><pre><code>在一个给定形状的棋盘（形状可能是不规则的）上面摆放棋子，棋子没有区别。要求摆放时任意的两个棋子不能放在棋盘中的同一行或者同一列，请编程求解对于给定形状和大小的棋盘，摆放k个棋子的所有可行的摆放方案C。Input输入含有多组测试数据。 每组数据的第一行是两个正整数，n k，用一个空格隔开，表示了将在一个n*n的矩阵内描述棋盘，以及摆放棋子的数目。 n &lt;= 8 , k &lt;= n 当为-1 -1时表示输入结束。 随后的n行描述了棋盘的形状：每行有n个字符，其中 # 表示棋盘区域， . 表示空白区域（数据保证不出现多余的空白行或者空白列）。 Output对于每一组数据，给出一行输出，输出摆放的方案数目C （数据保证C&lt;2^31）。Sample Input2 1#..#4 4...#..#..#..#...-1 -1Sample Output21</code></pre><blockquote><p>与八皇后问题相似</p></blockquote><h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><pre><code>#include&lt;stdio.h&gt;#include&lt;string.h&gt;#define maxn 1024int n,k;int ans,y;char field[maxn][maxn];int book[maxn];void ndfs(int now){    if(k == y)    {        ans++;        return;    }    if(now &gt;= n)        return;    for(int i = 0;i&lt;n;i++)    {        if(book[i] == 0 &amp;&amp; field[now][i] == &apos;#&apos;)        {            book[i] = 1;            y++;            ndfs(now+1);            book[i] = 0;            y--;        }    }    ndfs(now+1);}int main(){    while(scanf(&quot;%d%d&quot;,&amp;n,&amp;k) == 2 &amp;&amp; n&gt;= 1 &amp;&amp; n &lt;= 8 &amp;&amp; k &gt;= 0 &amp;&amp; k &lt;= n)    {        ans = 0;        y = 0;        for(int i = 0;i&lt;n;i++)        {            scanf(&quot;%s&quot;,&amp;field[i]);        }        memset(book,0,sizeof(book));        ndfs(0);        printf(&quot;%d\n&quot;,ans);    }}</code></pre><h1 id="踩坑点"><a href="#踩坑点" class="headerlink" title="踩坑点"></a>踩坑点</h1><ol><li><p>【错误点】在定义全局变量<code>ans</code>和<code>y</code>的同时，为它们<code>初始化为0</code>了</p><p> 【反思】 在设置全局变量的时候，要思考到，在初始化的时候，对下面使用到它们的函数是否会有影响，若有，可以在main函数内再为其赋初值</p></li><li><p>【错误点】最终<code>ans</code>输出时，格式为<code>printf(&quot;%d&quot;,ans);</code>,导致<code>Presentation Error</code></p><p> 【反思】在进行题目要求的格式输出时，应注意是否要输出<code>\n</code>,本题正确输出为printf(“%d\n”,ans);</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;POJ-1321-棋盘问题&quot;&gt;&lt;a href=&quot;#POJ-1321-棋盘问题&quot; class=&quot;headerlink&quot; title=&quot;POJ 1321-棋盘问题&quot;&gt;&lt;/a&gt;POJ 1321-棋盘问题&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http
+      
+    
+    </summary>
+    
+    
+      <category term="algorithm" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>坑！一个空格引发的血案</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/05/%E5%9D%91%EF%BC%81%E4%B8%80%E4%B8%AA%E7%A9%BA%E6%A0%BC%E5%BC%95%E5%8F%91%E7%9A%84%E8%A1%80%E6%A1%88/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/05/坑！一个空格引发的血案/</id>
+    <published>2018-04-05T03:48:26.000Z</published>
+    <updated>2018-04-05T04:06:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>今天在<a href="https://www.jisuanke.com/" target="_blank" rel="noopener">计蒜客</a>上刷题，碰到一个巨坑的题(好吧，其实是自己粗心…)</p><p>题目链接:<a href="https://nanti.jisuanke.com/t/19967" target="_blank" rel="noopener">在这</a></p></blockquote><h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="ACM-ICPC-2017-Asia-Nanning-【A-Abiyoyo】"><a href="#ACM-ICPC-2017-Asia-Nanning-【A-Abiyoyo】" class="headerlink" title="ACM-ICPC 2017 Asia Nanning 【A. Abiyoyo】"></a>ACM-ICPC 2017 Asia Nanning 【A. Abiyoyo】</h2><pre><code>“Abiyoyo, Abiyoyo.”“Abiyoyo, Abiyoyo.”“Abiyoyo, yo yoyo yo yoyo.”Once upon a time there was a little boy, who played a ukulele. He’d go around town: clink, clunk, CLONK! Of course, the grownups would be busy, and they would say: “Take that thing out of here. We are talking. Git!”And they would kick him out of the house.Now, in this town they used to tell stories. The old people used to tell stories about the monsters and giants that lived in the old days! They used to tell a story about Abiyoyo.They said he was as tall as a house, and could eat people up. Of course, nobody believed it, but they told the stories anyway.But one day, the sun rose, blood red over the hill, and the first people that got up and looked out of their window. They saw a great big shadow in front of the sun, and they could feel the whole ground shake.Women screamed. Strong men fainted.They said: “Run for your lives! Abiyoyo’s coming!” Down through the fields he came. He came to the sheep, pasture and grabs a whole sheep. Yeowp! He eats it down in one bite. He comes to the cow pasture. Yuhk!Just then the boy woke up. The boy rubbed his eyes and said: “Hey, what is coming over the fields? Oh, it is Abiyoyo.”He grabbed his ukulele. Over the fields he went, right up to where Abiyoyo was. People screamed “Don’t go near him! He will eat you alive!”There was Abiyoyo. He had long fingernails because he never cut them. He had slobbery teeth because he never brushed them. Matted hair because he never combed it. Stinking feet because he never washed them. He was just about to come down with his claws, when the boy whipped out his ukulele.Abiyoyo, Abiyoyo Abiyoyo, Abiyoyo Abiyoyo, yo yoyo yo yoyo Abiyoyo, yo yoyo yo yoyo.Well, the monster had never heard a song about himself before, and a foolish grin spread across his face. And started to dance.Abiyoyo, Abiyoyo.Abiyoyo,Abiyoyo.The boy went faster.Abiyoyo, yo yoyo, yo yoyo Abiyoyo, yoyo yoyo, ho ho ho ho ho ho ho ho.Abiyoyo,yoyoyo,yoyoyoAbiyoyo,yoyoyoyo,hohohohohohohoho.The giant got out of breath. He staggered. He fell down flat on the ground.“Booooom!” A hunter fired, and the Abiyoyo died. People streamed out of their houses, and ran across the fields.They sang many times:Abiyoyo, Abiyoyo.Abiyoyo,Abiyoyo.Then they all sang:Abiyoyo, yo yoyo yo yoyo.Abiyoyo,yoyoyoyoyoyo.Abiyoyo, yo yoyo yo yoyo.Abiyoyo,yoyoyoyoyoyo.InputThis problem has several test cases. The first line of the input contains an integer tt (1 \le t \le 20)(1≤t≤20) which is the number of test cases.Then tt cases follow. For each test, a line contains an integer k (1 \le k \le 20)k(1≤k≤20) which means that people sang k times:Abiyoyo, Abiyoyo.Abiyoyo,Abiyoyo.OutputFor each case, output all what they sang after the death of Abiyoyo in several lines.样例输入3251样例输出Abiyoyo, Abiyoyo.Abiyoyo, Abiyoyo.Abiyoyo, yo yoyo yo yoyo.Abiyoyo, yo yoyo yo yoyo.Abiyoyo, Abiyoyo.Abiyoyo, Abiyoyo.Abiyoyo, Abiyoyo.Abiyoyo, Abiyoyo.Abiyoyo, Abiyoyo.Abiyoyo, yo yoyo yo yoyo.Abiyoyo, yo yoyo yo yoyo.Abiyoyo, Abiyoyo.Abiyoyo, yo yoyo yo yoyo.Abiyoyo, yo yoyo yo yoyo.</code></pre><h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><pre><code>#include&lt;bits/stdc++.h&gt;int main(){    int t,k;    scanf(&quot;%d&quot;,&amp;t);    if(t &gt;= 1 &amp;&amp; t &lt;= 20)    {        while(t--)        {            scanf(&quot;%d&quot;,&amp;k);            if(k &gt;= 1 &amp;&amp; k &lt;= 20)            {                for(int i = 0;i&lt;k;i++)                {                    //if(i == k)printf(&quot;Abiyoyo, Abiyoyo.&quot;);                    /*else*/ printf(&quot;Abiyoyo, Abiyoyo.\n&quot;);                }                for(int j = 0;j&lt;2;j++)                {                    //if(j == 2) printf(&quot;Abiyoyo, yo yoyo yo yoyo.&quot;);                    /*else*/ printf(&quot;Abiyoyo, yo yoyo yo yoyo.\n&quot;);                }            }        }    }}</code></pre><h1 id="你以为你以为的就是你以为的？"><a href="#你以为你以为的就是你以为的？" class="headerlink" title="你以为你以为的就是你以为的？"></a>你以为你以为的就是你以为的？</h1><blockquote><p>一开始我以为是换行的问题，没想到是这个<code>Abiyoyo, yo yoyo yo yoyo.</code>中，<code>Abiyoyo,</code>后面还有一个空格…</p><p>所以正确输出是这样的：<code>Abiyoyo</code> + <code>,</code> + <code>空格</code> + <code>yo</code> + <code>空格</code> + <code>yoyo</code> + <code>空格</code> + <code>yo</code> + <code>空格</code> + <code>yoyo</code></p><p>努力微笑.jpg</p></blockquote><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><blockquote><ol><li>一定要注意看题目的<strong>input</strong>和<strong>output</strong>的<strong>格式</strong>!!!</li><li>不要急于submit…因为会上瘾的…而且会有<strong>罚时</strong>!!!</li></ol></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;今天在&lt;a href=&quot;https://www.jisuanke.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;计蒜客&lt;/a&gt;上刷题，碰到一个巨坑的题(好吧，其实是自己粗心…)&lt;/p&gt;
+&lt;p&gt;题目链接:&lt;a href=&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="计蒜客" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/%E8%AE%A1%E8%92%9C%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何为你的文章加密</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/04/%E5%A6%82%E4%BD%95%E4%B8%BA%E4%BD%A0%E7%9A%84%E6%96%87%E7%AB%A0%E5%8A%A0%E5%AF%86/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/04/如何为你的文章加密/</id>
+    <published>2018-04-04T08:03:58.000Z</published>
+    <updated>2018-04-04T08:49:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>即使是最简陋的密码功能，也足以阻止90%的目光</p></blockquote><h1 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h1><p>刚开始使用Hexo来写自己的博客，便爱上了它带来的简洁与便捷，只需<code>hexo g -d</code>,便可以发布一篇文章，这时的满足感让我兴奋，像是日记，更像是一个perfect的小天地。然而，这片天地终究是放置在互联网上的，有时免不了想写一些不太私密，但又不想随便拱手置于睽睽众目之下，于是，一个极简陋的文章加密器诞生了。</p><h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><h2 id="背景：hexo静态网页"><a href="#背景：hexo静态网页" class="headerlink" title="背景：hexo静态网页"></a>背景：hexo静态网页</h2><p>众所周知，hexo最终编译出来的是一堆静态的文件，也就是说每一篇文章的所有信息是毫无更改地展示在博客页面中的(rss差不多就是如此)，当你在网络上请求查看一片文章时，    这篇文章的所有代码信息就全部被传输过来了</p><h2 id="了解到的两种方法：敲好用的promt函数-VS-crypto-js-js的AES算法接口"><a href="#了解到的两种方法：敲好用的promt函数-VS-crypto-js-js的AES算法接口" class="headerlink" title="了解到的两种方法：敲好用的promt函数 VS crypto-js.js的AES算法接口"></a>了解到的两种方法：敲好用的promt函数 VS crypto-js.js的AES算法接口</h2><h3 id="promt函数"><a href="#promt函数" class="headerlink" title="promt函数"></a>promt函数</h3><h4 id="引例"><a href="#引例" class="headerlink" title="引例"></a>引例</h4><blockquote><ol><li><p>js的阻塞机制：在以往的经验中，当页面中有调用alert();函数的时候，整个页面会停止运行，直到你点击确定之后，页面的中的代码才会继续执行下去</p></li><li><p>在这里需要的也是这样一个假象：阻止整个页面的渲染，直到你输入了正确的密码才能让页面继续渲染实际的文章</p></li><li><p>可是alert只有提醒的功能，没有输入的功能，所以这里要用到的是promt函数。</p></li></ol></blockquote><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><blockquote><ol><li><p>alert()和promt()都是windows对象中的方法，promt()的作用是显示一个提示用户输入的对话框，其返回值就是用户输入的字符串</p></li><li><p>此时只需将你设置的密码与promt()返回的字符串相比较即可；若不匹配，只需将当前页的location属性设置为上一个页面或者首页即可</p></li></ol></blockquote><h3 id="crypto-js-js的AES算法接口"><a href="#crypto-js-js的AES算法接口" class="headerlink" title="crypto-js.js的AES算法接口"></a>crypto-js.js的AES算法接口</h3><p>emmm这个实在是不会，所以就不说了，但是感觉比promt()函数复杂一点【虽然说密码性会好很多，但是这个简陋的密码器足矣】</p><h1 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h1><ol><li><p>定位到<code>themes-&gt;next-&gt;layout-&gt;_partials-&gt;head.swig</code>(使用了next主题那么久，这些文件结构还是能看懂滴)</p></li><li><p>将下面的代码粘贴到所有的<code>&lt;meta&gt;</code>标签之后就可以了</p><pre><code>&lt;这里是script标签&gt;    (function(){        if(&apos;{{ page.password }}&apos;){            if (prompt(&apos;请输入文章密码&apos;,&apos;&apos;) !== &apos;{{ page.password }}&apos;){                alert(&apos;密码错误！&apos;);                history.back();            }        }    })();&lt;这里是/script标签&gt;</code></pre></li></ol><blockquote><p>注： page变量：就是你在<code>hexo new</code>的时候生成的文件中最顶部的东西</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;即使是最简陋的密码功能，也足以阻止90%的目光&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;缘起&quot;&gt;&lt;a href=&quot;#缘起&quot; class=&quot;headerlink&quot; title=&quot;缘起&quot;&gt;&lt;/a&gt;缘起&lt;/h1&gt;&lt;p&gt;刚开始使用Hexo来写自
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记一次本地Hexo文件中main.css被离奇掏空的经历</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/04/%E8%AE%B0%E4%B8%80%E6%AC%A1Hexo%E5%8D%9A%E5%AE%A2%E9%A1%B5%E9%9D%A2css%E5%8A%A0%E8%BD%BD%E5%A4%B1%E6%95%88%E7%BB%8F%E5%8E%86/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/04/记一次Hexo博客页面css加载失效经历/</id>
+    <published>2018-04-04T03:27:47.000Z</published>
+    <updated>2018-04-04T04:32:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="博客页面main-css文件为空的解决办法"><a href="#博客页面main-css文件为空的解决办法" class="headerlink" title="博客页面main.css文件为空的解决办法"></a>博客页面main.css文件为空的解决办法</h1><h1 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h1><p>今早我兴冲冲地在手机上打开博客，想着又是一个简洁优美的站点在迎接着我，然鹅…<br><img src="https://i.imgur.com/dt3pMCJ.jpg" alt=""></p><h2 id="丑陋-jpg…"><a href="#丑陋-jpg…" class="headerlink" title="丑陋.jpg…"></a>丑陋.jpg…</h2><p>一开始我以为是浏览器没有加载出css和js文件来，心里一边暗骂着某C浏览器和移动的辣鸡网速，一边不停地刷新,但是不断地重复换来的却是相同的结果。我没有放弃，在尝试过用chrome和safari加载却仍然是丑陋.jpg后，我意识到有什么不对劲了…</p><h1 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h1><ol><li><p>既然猜到问题出在css文件上，首要操作肯定是打开路径<code>\blog\public\css</code>定位到hexo放置css文件的位置，并打开main.css</p></li><li><p>果然赫然显示main.css的大小为0 kb</p><p><code>所以可能是我某一次部署的时候手贱改动了css文件？</code></p></li></ol><h1 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h1><p>此时就比较好办了，就两个方向：</p><ol><li><p>进入你的博客在GitHub上的仓库，查找最近几次你merge过的commit，尝试能不能找到main.css被删除的记录，就像我这样…<img src="https://i.imgur.com/PxHaKyi.png" alt="">，找到后就直接把里面的内容复制到你的本地main.css文件中，再<code>hexo g -d</code>一次就好了。</p></li><li><p>第二个嘛…就是暴力更新一次hexo的版本(我就是这样，反正我也好久没更新了)。但这个思路我一开始没想到，只是在google上查找看看是否有跟我相同的案例，想着直接拿人家的解决方案，但是很多案例都是css文件不能生成或者是css文件不能加载，并没有查到与我相似的问题，于是我想到直接去<a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">hexo作者</a>和<a href="https://github.com/iissnan/hexo-theme-next/issues" target="_blank" rel="noopener">next(我使用的主题)作者</a>GitHub的Issues页面找找答案，很可惜，也不成功。但是在next的Issues页面有一个issue引起了我的注意：<img src="https://i.imgur.com/PWm8vMh.png" alt=""></p></li></ol><blockquote><p>对，就是<strong>版本更新</strong>，我就跑去更新hexo了</p></blockquote><h2 id="Hexo版本更新方法"><a href="#Hexo版本更新方法" class="headerlink" title="Hexo版本更新方法"></a>Hexo版本更新方法</h2><ol><li>查看过往版本：<a href="https://github.com/hexojs/hexo/releases" target="_blank" rel="noopener">releases</a></li><li>更新版本：首先打开<code>cmd</code>进入hexo所在目录，键入<code>npm update</code>，然后<code>hexo g -d</code>，查看部署效果。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;博客页面main-css文件为空的解决办法&quot;&gt;&lt;a href=&quot;#博客页面main-css文件为空的解决办法&quot; class=&quot;headerlink&quot; title=&quot;博客页面main.css文件为空的解决办法&quot;&gt;&lt;/a&gt;博客页面main.css文件为空的解决办法&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>区块链学习之路之(一)</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/区块链学习之路/</id>
+    <published>2018-04-03T15:23:24.000Z</published>
+    <updated>2018-04-03T15:38:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="区块链的诞生"><a href="#区块链的诞生" class="headerlink" title="区块链的诞生"></a>区块链的诞生</h1><p>互联网上的贸易，几乎都需要借助可资信赖的<code>第三方信用机构</code>来处理电子支付信息。这类系统仍然内生性地受制于“基于信用的模式”。区块链技术是构建比特币区块链网络与交易信息加密传输的基础技术。它基于密码学原理而不基于信用，使得任何达成一致的<code>双方直接支付</code>，从而不需要第三方中介的参与。</p><p><code>定义：</code></p><p>区块链是一个<code>分布式账本</code>，一种通过<code>去中心化、去信任</code>的方式集体维护一个可靠数据库的技术方案。</p><p>从数据的角度来看：区块链是一种几乎不可能被更改的分布式数据库。这里的“分布式”不仅体现为数据的分布式存储，也体现为数据的<code>分布式记录</code>（即由系统参与者共同维护）。</p><p>从技术的角度来看：区块链并不是一种单一的技术，而是<code>多种技术整合的结果</code>。这些技术以新的结构组合在一起，形成了一种新的数据记录、存储和表达的方式。<br><img src="https://img-blog.csdn.net/20161019141210842" alt=""></p><p>区块链目前还处在早期阶段，一些嗅到商机的大企业，技术牛人都对此开展了研究。初期阶段，想想有木有好兴奋….</p><p><img src="https://img-blog.csdn.net/20161019151550800" alt=""></p><h1 id="区块链技术的特征"><a href="#区块链技术的特征" class="headerlink" title="区块链技术的特征"></a>区块链技术的特征</h1><h2 id="开放，共识"><a href="#开放，共识" class="headerlink" title="开放，共识"></a>开放，共识</h2><p>任何人都可以参与到区块链网络，每一台设备都能作为一个节点，每个节点都允许获得一份完整的数据库拷贝。节点间基于一套共识机制，通过竞争计算共同维护整个区块链。任一节点失效，其余节点仍能正常工作。</p><h2 id="去中心，去信任"><a href="#去中心，去信任" class="headerlink" title="去中心，去信任"></a>去中心，去信任</h2><p>区块链由众多节点共同组成一个端到端的网络，不存在中心化的设备和管理机构。节点之间数据交换通过数字签名技术进行验证，无需互相信任，只要按照系统既定的规则进行，节点之间不能也无法欺骗其它节点。</p><h2 id="交易透明，双方匿名"><a href="#交易透明，双方匿名" class="headerlink" title="交易透明，双方匿名"></a>交易透明，双方匿名</h2><p>区块链的运行规则是公开透明的，所有的数据信息也是公开的，因此每一笔交易都对所有节点可见。由于节点与节点之间是去信任的，因此节点之间无需公开身份，每个参与的节点都是匿名的。</p><h2 id="不可篡改，可追溯"><a href="#不可篡改，可追溯" class="headerlink" title="不可篡改，可追溯"></a>不可篡改，可追溯</h2><p>单个甚至多个节点对数据库的修改无法影响其他节点的数据库，除非能控制整个网络中超过51%的节点同时修改，这几乎不可能发生。区块链中的每一笔交易都通过密码学方法与相邻两个区块串联，因此可以追溯到任何一笔交易的前世今生。</p><h1 id="区块链中的关键技术原理"><a href="#区块链中的关键技术原理" class="headerlink" title="区块链中的关键技术原理"></a>区块链中的关键技术原理</h1><p>区块链的整个架构如下图所示<br><img src="https://img-blog.csdn.net/20161019145330069" alt=""></p><h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>数字签名涉及到一个哈希函数、发送者的公钥、发送者的私钥。数字签名有两个作用，一是能确定消息确实是由发送方签名并发出来的。二是数字签名能确定消息的完整性。</p><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p>发送报文时，发送方用一个哈希函数从报文文本中生成报文摘要，然后用自己的私钥对摘要进行加密，加密后的摘要将作为报文的数字签名和报文一起发送给接收方，接收方首先用与发送方一样的哈希函数从接收到的原始报文中计算出报文摘要，接着再用发送方的公钥来对报文附加的数字签名进行解密，如果这两个摘要相同、那么接收方就能确认该数字签名是发送方的。</p><h2 id="SHA256"><a href="#SHA256" class="headerlink" title="SHA256"></a>SHA256</h2><p><code>一种求Hash值的加密算法。</code></p><h3 id="工作原理-1"><a href="#工作原理-1" class="headerlink" title="工作原理"></a>工作原理</h3><p>将任何一串数据输入到SHA256将得到一个256位的Hash值（散列值）。其特点：相同的数据输入将得到相同的结果。输入数据只要稍有变化（比如一个1变成了0）则将得到一个千差万别的结果，且结果无法事先预知。正向计算（由数据计算其对应的Hash值）十分容易。逆向计算（俗称“破解”，即由Hash值计算出其对应的数据）极其困难，在当前科技条件下被视作不可能。</p><h2 id="Merkle-Tree"><a href="#Merkle-Tree" class="headerlink" title="Merkle Tree"></a>Merkle Tree</h2><p>一种<code>哈希二叉树</code>，使用它可以快速校验大规模数据的完整性。在比特币网络中，Merkle 树被用来归纳一个区块中的所有交易信息，最终生成这个区块所有交易信息的一个统一的哈希值，区块中任何一笔交易信息的改变都会使得使得Merkle 树改变。</p><h3 id="工作原理-2"><a href="#工作原理-2" class="headerlink" title="工作原理"></a>工作原理</h3><p>网上大都称为Merkle Hash Tree,这是因为 它所构造的Merkle Tree的所有节点都是Hash值。Merkle Tree具有以下特点：</p><ol><li><p>它是一种树，可以是二叉树，也可以多叉树，无论是几叉树，它都具有树结构的所有特点；</p></li><li><p>Merkle树的叶子节点上的value，是由你指定的，这主要看你的设计了，如Merkle Hash Tree会将数据的Hash值作为叶子节点的值；</p></li><li><p>非叶子节点的value是根据它下面所有的叶子节点值，然后按照一定的算法计算而得出的。如Merkle Hash Tree的非叶子节点value的计算方法是将该节点的所有子节点进行组合，然后对组合结果进行hash计算所得出的hash value。<br><img src="https://img-blog.csdn.net/20161019142501390" alt=""></p></li></ol><h2 id="时间戳服务器"><a href="#时间戳服务器" class="headerlink" title="时间戳服务器"></a>时间戳服务器</h2><p>大多用来进行比对以及验证处理，时间戳服务器是一款基于PKI（公钥密码基础设施）技术的时间戳权威系统，对外提供精确可信的时间戳服务。它采用精确的时间源、高强度高标准的安全机制，以确认系统处理数据在某一时间的存在性和相关操作的相对时间顺序，为信息系统中的时间防抵赖提供基础服务。</p><h1 id="区块链的第一个成功应用"><a href="#区块链的第一个成功应用" class="headerlink" title="区块链的第一个成功应用"></a>区块链的第一个成功应用</h1><p><img src="https://img-blog.csdn.net/20161019142912302" alt=""></p><p><code>比特币</code>是区块链技术的第一个应用，它的生态圈如下：</p><p><img src="https://img-blog.csdn.net/20161019144924882" alt=""></p><p><code>任何机器都可以运行一个完整的比特币节点</code>，一个完整的比特币节点包括如下功能：</p><ol><li>钱包，允许用户在区块链网络上进行交易</li><li>完整区块链，记录了所有交易历史，通过特殊的结构保证历史交易的安全性，并且用来验证新交易的合法性</li><li>矿工，通过记录交易及解密数学题来生成新区块，如果成功可以赚取奖励</li><li>路由功能，把其它节点传送过来的交易数据等信息再传送给更多的节点</li></ol><p><img src="https://img-blog.csdn.net/20161019142955256" alt=""></p><p>第1步：所有者A利用他的私钥对前一次交易（比特货来源）和下一位所有者B签署一个数字签名，并将这个签名附加在这枚货币的末尾，制作成交易单</p><p><strong>要点：B以公钥作为接收方地址</strong></p><p>第2步：A将交易单广播至全网，比特币就发送给了B，每个节点都将收到的交易信息纳入一个区块中</p><p><strong>要点：对B而言，该枚比特币会即时显示在比特币钱包中，但直到区块确认成功后才可用。目前一笔比特币从支付到最终确认成功，得到6个区块确认之后才能真正确认到帐。</strong></p><p>第3步：每个节点通过解一道数学难题，从而去获得创建新区块权利，并争取得到比特币的奖励（新比特币会在此过程中产生）</p><p><strong>要点：节点反复尝试寻找一个数值，使得将该数值、区块链中最后一个区块的Hash值以及交易单三部分送入SHA256算法后能计算出散列值X（256位）满足一定条件（比如前20位均为0），即找到数学难题的解。由此可见，答案并不唯一</strong></p><p>第4步：当一个节点找到解时，它就向全网广播该区块记录的所有盖时间戳交易，并由全网其他节点核对</p><p><strong>要点：时间戳用来证实特定区块必然于某特定时间是的确存在的。比特币网络采取从5个以上节点获取时间，然后取中间值的方式作为时间戳。</strong></p><p>第5步：全网其他节点核对该区块记账的正确性，没有错误后他们将在该合法区块之后竞争下一个区块，这样就形成了一个合法记账的区块链。</p><p><strong>要点：每个区块的创建时间大约在10分钟。随着全网算力的不断变化，每个区块的产生时间会随算力增强而缩短、随算力减弱而延长。其原理是根据最近产生的2016年区块的时间差（约两周时间），自动调整每个区块的生成难度（比如减少或增加目标值中0的个数），使得每个区块的生成时间是10分钟。</strong></p><p>5、主要的数据结构</p><p>区块链以区块为单位组织数据。全网所有的交易记录都以交易单的形式存储在全网唯一的区块链中。<br><img src="https://img-blog.csdn.net/20161019143328120" alt=""></p><p>区块是一种记录交易的数据结构。每个区块由区块头和区块主体组成，区块主体只负责记录前一段时间内的所有交易信息，区块链的大部分功能都由区块头实现。</p><p><img src="https://img-blog.csdn.net/20161019145437195" alt=""></p><p>1.版本号，标示软件及协议的相关版本信息<br>2.父区块哈希值，引用的区块链中父区块头的哈希值，通过这个值每个区块才首尾相连组成了区块链，并且这个值对区块链的安全性起到了至关重要的作用<br>3.Merkle根，这个值是由区块主体中所有交易的哈希值再逐级两两哈希计算出来的一个数值，主要用于检验一笔交易是否在这个区块中存在<br>4.时间戳，记录该区块产生的时间，精确到秒<br>5.难度值，该区块相关数学题的难度目标<br>6.随机数(Nonce)，记录解密该区块相关数学题的答案的值</p><p><img src="https://img-blog.csdn.net/20161019143358718" alt=""></p><p>在当前区块加入区块链后，所有矿工就立即开始下一个区块的生成工作。</p><p>1.把在本地内存中的交易信息记录到区块主体中<br>2.在区块主体中生成此区块中所有交易信息的 Merkle 树，把 Merkle 树根的值保存在区块头中<br>3.把上一个刚刚生成的区块的区块头的数据通过 SHA256 算法生成一个 哈希值填入到当前区块的父哈希值中<br>4.把当前时间保存在时间戳字段中<br>5.难度值字段会根据之前一段时间区块的平均生成时间进行调整以应对整个网络不断变化的整体计算总量，如果计算总量增长了，则系统会调高数学题的难度值，使得预期完成下一个区块的时间依然在一定时间内</p><p><img src="https://img-blog.csdn.net/20161019143410215" alt=""></p><h1 id="核心问题"><a href="#核心问题" class="headerlink" title="核心问题"></a>核心问题</h1><h2 id="工作量证明"><a href="#工作量证明" class="headerlink" title="工作量证明"></a>工作量证明</h2><p>区块头包含一个随机数，使得区块的随机散列值出现了所需的0个数。节点通过反复尝试来找到这个随机数，这样就构建了一个工作量证明机制。工作量证明机制的本质是一CPU一票，“大多数”的决定表达为最长的链，因为最长的链包含了最大的工作量。如果大多数的CPU为诚实的节点控制，那么诚实的链条将以最快的速度延长，并超越其他的竞争链条。如果想要修改已出现的区块，攻击者必须重新完成该区块的工作量外加该区块之后所有区块的工作量，并最终赶上和超越诚实节点的工作量。</p><h2 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h2><p>同一时间段内全网不止一个节点能计算出随机数，即会有多个节点在网络中广播它们各自打包好的临时区块（都是合法的）。</p><p>某一节点若收到多个针对同一前续区块的后续临时区块，则该节点会在本地区块链上建立分支，多个临时区块对应多个分支。该僵局的打破要等到下一个工作量证明被发现，而其中的一条链条被证实为是较长的一条，那么在另一条分支链条上工作的节点将转换阵营，开始在较长的链条上工作。其他分支将会被网络彻底抛弃。</p><p><img src="https://img-blog.csdn.net/20161019143456981" alt=""></p><h2 id="双花"><a href="#双花" class="headerlink" title="双花"></a>双花</h2><p>双花，即<code>二重支付</code>，指攻击者几乎同时将同一笔钱用作不同交易。</p><p>每当节点在把新收到的交易单加入区块之前，会顺着交易的发起方的公钥向前遍历检查，检查当前交易所用的币是否确实属于当前交易发起方，此检查可遍历到该币的最初诞生点（即产生它的那块区块源）。虽然多份交易单可以任意序的广播，但是它们最终被加入区块时必定呈现一定的顺序。区块之间以Hash值作为时间戳则区块，这决定了任意一笔交易资金来源都可以被确定的回溯。</p><p>7、应用场景</p><p><strong>从需求端来看</strong>，金融、医疗、公证、通信、供应链、域名、投票等领域都开始意识到区块链的重要性并开始尝试将技术与现实社会对接。</p><p><strong>从投资端来看</strong>，区块链的投资资金供给逐步上升，风投的投资热情也不断高涨，投资密度越来越大，供给端的资金供给有望推动技术的进一步发展。</p><p><strong>从市场应用来看</strong>，区块链能成为一种市场工具，帮助社会削减平台成本，让中间机构成为过去；区块链将促使公司现有业务模式重心的转移，有望加速公司的发展。</p><h1 id="资料参考"><a href="#资料参考" class="headerlink" title="资料参考"></a>资料参考</h1><p>   <a href="http://www.doc88.com/p-3843131640343.html" target="_blank" rel="noopener">区块链技术发展现状和展望</a></p><p>其他网页收集</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;区块链的诞生&quot;&gt;&lt;a href=&quot;#区块链的诞生&quot; class=&quot;headerlink&quot; title=&quot;区块链的诞生&quot;&gt;&lt;/a&gt;区块链的诞生&lt;/h1&gt;&lt;p&gt;互联网上的贸易，几乎都需要借助可资信赖的&lt;code&gt;第三方信用机构&lt;/code&gt;来处理电子支付信息。这类系统
+      
+    
+    </summary>
+    
+    
+      <category term="BlokChainTech" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/BlokChainTech/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数模-梯度下降法</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/03/梯度下降法/</id>
+    <published>2018-04-03T15:22:25.000Z</published>
+    <updated>2018-04-07T12:17:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>先占坑，太困了，明天再写</code></p><hr><h2 id="2018-4-7-20-04-14-更新"><a href="#2018-4-7-20-04-14-更新" class="headerlink" title="2018/4/7 20:04:14 更新"></a>2018/4/7 20:04:14 更新</h2><blockquote><p>感觉蛮有用的，放在这以供查看</p></blockquote><h1 id="数学建模第四次课程作业"><a href="#数学建模第四次课程作业" class="headerlink" title="数学建模第四次课程作业"></a>数学建模第四次课程作业</h1><pre><code>非线性规划  用梯度下降法求解 min f (x) = x1 - x2 + 2x12 + 2x1x2 + x22，初始点取x0 = (0, 0)T，允许误差取e = 0.05。注：只需迭代三步，即求到x(3)。解：    手工计算到x(3)    (1) 计算目标函数f (x)的负梯度，有：         -▽f (x) = ((-1-4x1-2x2)¦(1-2x1-2x2))   （2）选择初始点x(0) = (0,0)T,计算得：         P(0) = -▽f (x(0)) = (-1,1)T，‖P0‖ = √2 ≈ 1.4 &gt; e = 0.05         故x(0)不能成为近似最优解，需考虑最优步长λ0。         将x(0) + λP(0) = ((-λ)¦λ)代入 f (x)有f (x(0) +λP(0)) =λ2 - 2λ。求单变量极值问题得：         λ0 = (min)┬(λ≥0)⁡〖f (x(0) + λP(0) 〗) =1，于是由迭代格式有x(1) = x(0) + λP(0) = ((-1)¦1)   （3）对于点x(1) = (-1，1)T，计算得：        P(1) = -▽f (x(1)) = (1,1)T，‖P1‖ = √2 ≈ 1.4 &gt; e = 0.05        故x(1)不能成为近似最优解，需考虑最优步长λ1。        将x(1) +λP(1) = ((-1+λ)¦(1+λ))代入 f (x)有f (x(1) +λP(1)) = 5λ2 - 2λ - 1。求单变量极值问题得：        λ1 = (min)┬(λ≥0)⁡〖f (x(1) +λP(1)) 〗 =1/5，于是由迭代格式有x(2) = x(1) +λP(1) = ((-4/5)¦(6/5))    （4）对于点x(2) = (-4/5，6/5)T，计算得：           P(2) = -▽f (x(2)) = (-1/5，1/5)T，‖P2‖ = √2/5 ≈ 0.28 &gt; e = 0.05        故x(2)不能成为近似最优解，需考虑最优步长λ2。        将x(2) +λP(2) = ((-4/5-1/5 λ)¦(6/5+1/5 λ))代入 f (x)有f (x(2) +λP(2)) = 1/25 (λ-1)2 - 31/25 。求单变量极值问题得：        λ2 = (min)┬(λ≥0)⁡〖f (x(2) +λP(2)) 〗 = 1，于是由迭代格式有x(3) = x(2) +λP(2) = ((-1)¦(7/5))    （5）对于点x(3) = (-1，7/5)T，计算得：          P(3) = -▽f (x(3)) = (1/5，1/5)T，‖P3‖ = √2/5 ≈ 0.28 &gt; e = 0.05        故x(3)不能成为近似最优解，需考虑最优步长λ2。        将x(2) +λP(2) = ((-1+1/5 λ)¦(7/5+1/5 λ))代入 f (x)有f (x(2) +λP(2)) = 1/5 (λ-  6/5)2 - 31/25 。求单变量极值问题得：        λ3 = (min)┬(λ≥0)⁡〖f (x(3) +λP(3)) 〗 = 6/5，于是由迭代格式有x(4) = x(3) +λP(3) = ((-19/25)¦(41/25))    (6) ······</code></pre><h1 id="Matlab函数实现【参考博客】："><a href="#Matlab函数实现【参考博客】：" class="headerlink" title="Matlab函数实现【参考博客】："></a>Matlab函数实现<a href="https://blog.csdn.net/wangdingqiaoit/article/details/23454769" target="_blank" rel="noopener">【参考博客】</a>：</h1><h2 id="函数部分"><a href="#函数部分" class="headerlink" title="函数部分"></a>函数部分</h2><pre><code>function [ y ] = steepest(fx,var,x,e,MAX)if nargin &lt; 5    MAX = 10;endprecision = 3;bfound = 0;for k=1:1:MAX    direction = getNextDirecrion(fx,var,x);    disp(&apos;------------------------------&apos;);    fprintf(&apos;d[%d]=:&apos;,k);    disp( vpa(direction&apos;,precision) );    if normest(direction) &lt;= e        y = x;        bfound = 1;        break;    else        step = getNextStep(fx,var, x,direction);        if isempty(step)             error(&apos;can not find a proper step.&apos;);        end        %´òÓ¡Çó½â¹ý³Ì        fprintf(&apos;X[%d]=:&apos;,k);        disp( vpa(x&apos;,precision) );        fprintf(&apos;step(%d)=: &apos;, k);        disp( vpa(step,precision) );        disp(&apos;------------------------------&apos;);        x = x+step*direction;    endendif bfound == 1     disp(&apos;min value of:&apos;);    disp( vpa( subs(fx,var,y),precision) );endendfunction [direction] = getNextDirecrion(fx,var,xk)    gx = gradient(fx,var);     direction = -subs(gx,var,xk);endfunction [step] =getNextStep(fx,var,xk,dk)     syms lambda;    phix = subs(fx,var,xk+lambda*dk);    phix_diff = diff(phix);    step = double(solve(phix_diff,&apos;Real&apos;,true));end</code></pre><h2 id="Input："><a href="#Input：" class="headerlink" title="Input："></a>Input：</h2><pre><code>&gt;&gt; syms x1 x2;  X = [x1;x2];  fx = x1-x2+2*x1^2+2*x1*x2+x2^2;  x1 = [0;0];  e = 0.05;&gt;&gt; minVal = steepest(fx,X,x1,e)</code></pre><h2 id="Output："><a href="#Output：" class="headerlink" title="Output："></a>Output：</h2><pre><code>------------------------------d[1]=:[ -1.0, 1.0]X[1]=:[ 0, 0]step(1)=: 1.0------------------------------------------------------------d[2]=:[ 1.0, 1.0]X[2]=:[ -1.0, 1.0]step(2)=: 0.2------------------------------------------------------------d[3]=:[ -0.2, 0.2]X[3]=:[ -0.8, 1.2]step(3)=: 1.0------------------------------------------------------------d[4]=:[ 0.2, 0.2]X[4]=:[ -1.0, 1.4]step(4)=: 0.2------------------------------------------------------------d[5]=:[ -0.04, 0.04]X[5]=:[ -0.96, 1.44]step(5)=: 1.0------------------------------------------------------------d[6]=:[ 0.04, 0.04]X[6]=:[ -1.0, 1.48]step(6)=: 0.2------------------------------------------------------------d[7]=:[ -0.008, 0.008]min value of: -1.25minVal = -124/125  186/125</code></pre><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><blockquote><p>故需要迭代7步得到最优值及最优解，最优值为x<em> = (-124/125，186/125)，最优解为f (x</em>) = -1.25</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;code&gt;先占坑，太困了，明天再写&lt;/code&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;2018-4-7-20-04-14-更新&quot;&gt;&lt;a href=&quot;#2018-4-7-20-04-14-更新&quot; class=&quot;headerlink&quot; title=&quot;2018/4/7 20:04
+      
+    
+    </summary>
+    
+    
+      <category term="数学建模" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何使用DaoVoice与你的游客交流</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/01/%E4%BD%BF%E7%94%A8DaoVoice%E4%B8%8E%E5%8D%9A%E4%B8%BB%E4%BA%A4%E6%B5%81/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/01/使用DaoVoice与博主交流/</id>
+    <published>2018-04-01T13:47:20.000Z</published>
+    <updated>2018-04-03T13:18:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="如何使用DaoVoice与你的游客交流"><a href="#如何使用DaoVoice与你的游客交流" class="headerlink" title="如何使用DaoVoice与你的游客交流"></a>如何使用DaoVoice与你的游客交流</h1><blockquote><p>偶然路过大佬<a href="http://shenzekun.cn" target="_blank" rel="noopener"><code>Moorez</code></a>的博客时发现了部署在他网站上的一款可以让游客与博主能够在线交流的应用<a href="http://www.daovoice.io/" target="_blank" rel="noopener">DaoVoice</a>，萌生了尝(zhuang)鲜(bi)的念头。</p><p>google未果，故阅读官方文档自己摸索了一阵，终于大功告成！✌</p></blockquote><h1 id="DaoVoice部署"><a href="#DaoVoice部署" class="headerlink" title="DaoVoice部署"></a>DaoVoice部署</h1><h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><blockquote><ol><li><p>首先要去<a href="http://www.daovoice.io" target="_blank" rel="noopener">daovoice官网</a>上注册一个账号</p></li><li><p>登陆后会进入DaoVoice<a href="http://dashboard.daovoice.io/get-started" target="_blank" rel="noopener">应用创建引导页面</a>：(公司名称可以随意填；电话其实只要符合格式就好了)<img src="https://i.imgur.com/VjQPlW6.jpg" alt=""></p></li><li><p>按规则填好后就会进入控制台界面：<img src="https://i.imgur.com/wXuzQ7E.jpg" alt=""></p></li></ol><p>找到你的appid并记住它</p></blockquote><h2 id="配置主题文件"><a href="#配置主题文件" class="headerlink" title="配置主题文件"></a>配置主题文件</h2><blockquote><ol><li>进入文件路径：<code>/themes/next/layout/_partials/head.swig</code>，在最后写入如下代码：</li></ol></blockquote><pre><code>{% if theme.daovoice %}    {记得在这加上script标签}    (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5e7162b1.js","daovoice")    daovoice('init', {        app_id: "{{theme.daovoice_app_id}}"    });    daovoice('update');    {记得在这加上script标签}    {% endif %}</code></pre><blockquote><p>2 . 进入文件路径：<code>/themes/next</code>，打开主题配置文件<code>_config.yml</code>，在最后写入如下代码：</p></blockquote><pre><code># Online contact daovoice: truedaovoice_app_id: #填入你的appid</code></pre><h2 id="现在可以hexo-g-d部署到你的网站上看效果了"><a href="#现在可以hexo-g-d部署到你的网站上看效果了" class="headerlink" title="现在可以hexo g -d部署到你的网站上看效果了"></a>现在可以<code>hexo g -d</code>部署到你的网站上看效果了</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;如何使用DaoVoice与你的游客交流&quot;&gt;&lt;a href=&quot;#如何使用DaoVoice与你的游客交流&quot; class=&quot;headerlink&quot; title=&quot;如何使用DaoVoice与你的游客交流&quot;&gt;&lt;/a&gt;如何使用DaoVoice与你的游客交流&lt;/h1&gt;&lt;bloc
+      
+    
+    </summary>
+    
+    
+      <category term="DaoVoice" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/DaoVoice/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Valine--一个部署在LeanCloud上的博客评论系统</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/01/Valine-%E4%B8%80%E4%B8%AA%E9%83%A8%E7%BD%B2%E5%9C%A8LeanCloud%E4%B8%8A%E7%9A%84%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/04/01/Valine-一个部署在LeanCloud上的博客评论系统/</id>
+    <published>2018-04-01T08:44:28.000Z</published>
+    <updated>2018-04-01T09:17:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用Valine来为你的博客添加评论系统"><a href="#使用Valine来为你的博客添加评论系统" class="headerlink" title="使用Valine来为你的博客添加评论系统"></a>使用Valine来为你的博客添加评论系统</h1><h2 id="众多博客评论系统现状"><a href="#众多博客评论系统现状" class="headerlink" title="众多博客评论系统现状"></a>众多博客评论系统现状</h2><ul><li><del>多说</del>  【已死】</li><li><del>网易云跟帖</del>  【已死】</li><li>畅言  【需要备案】</li><li>来比力(LiveRe)  【国外服务，加载贼拉慢，还需翻墙】</li><li>Disqus  【国外服务，加载贼拉慢，还需翻墙】</li><li>Hypercomments  【国外服务，加载贼拉慢，还需翻墙】</li><li>Valine  【逼格高、操作无脑】</li></ul><p>我的博客是使用的next主题5.1.4版本，已经贴心地集成了Valine，所以还有什么理由不使用它呢~</p><h3 id="Valine特性"><a href="#Valine特性" class="headerlink" title="Valine特性"></a>Valine特性</h3><ul><li>fast</li><li>secure</li><li>无后端实现</li><li>完美支持Markdown语法(与Hexo巨配)</li><li>轻量</li><li>操作无脑(…)</li></ul><h1 id="Valine部署"><a href="#Valine部署" class="headerlink" title="Valine部署"></a>Valine部署</h1><h3 id="获取appid和appkey"><a href="#获取appid和appkey" class="headerlink" title="获取appid和appkey"></a>获取appid和appkey</h3><blockquote><ol><li><p>因为Valine是部署在LeanCloud上的，故首先需在LeanCloud上登录或注册账号。</p></li><li><p>登入LeanCloud后，进入<code>控制台</code>，点击左下角<code>创建应用</code>，选择免费的开发版即可。注意右上角有几个节点，<code>可以就近选择</code>。<img src="https://i.imgur.com/En858RJ.png" alt=""></p></li><li><p>应用创建好以后，进入刚刚创建的应用，选择左下角的设置&gt;应用Key，然后就能看到你的appid和appkey了：<img src="https://i.imgur.com/uGKKuF9.png" alt=""></p></li><li><p>为了数据安全，请注意设置自己的安全域名：<img src="https://i.imgur.com/Bl4GhY4.png" alt=""></p></li></ol></blockquote><h3 id="Hexo-NexT中的Valine的开启和设置"><a href="#Hexo-NexT中的Valine的开启和设置" class="headerlink" title="Hexo-NexT中的Valine的开启和设置"></a>Hexo-NexT中的Valine的开启和设置</h3><blockquote><ol><li>Hexo-NexT中已经默认安装了Valine插件，如果没有可以使用以下命令安装：</li></ol><p><code>npm install valine --save</code></p><ol><li>完成后，在NexT主题配置文件中加入/修改代码以开启：</li></ol></blockquote><pre><code># Valine.# You can get your appid and appkey from https://leancloud.cn# more info please open https://valine.js.orgvaline:  enable: true # 是否开启  appid:                            # 填上之前获取的AppID  appkey:                           # 填上之前获取的AppKey  notify: false # 新留言是否需要通知 https://github.com/xCss/Valine/wiki  verify: false # 是否需要验证，验证比较反人类建议false关闭  placeholder: 请在此输入您的留言 # 默认留言框内的文字  avatar: mm # 默认头像  guest_info: nick,mail # 默认留言框的头部需要访问者输入的信息  pageSize: 10 # pagination size #默认单页的留言条数 </code></pre><p>OK，至此已经已经完成配置并成功开启，<code>Hexo g -d</code>看效果吧。</p><h2 id="后期如果需要管理留言，至Leancloud-控制台-储存-comment即可进行添加、删除等操作。"><a href="#后期如果需要管理留言，至Leancloud-控制台-储存-comment即可进行添加、删除等操作。" class="headerlink" title="后期如果需要管理留言，至Leancloud/控制台/储存/comment即可进行添加、删除等操作。"></a>后期如果需要管理留言，至Leancloud/控制台/储存/comment即可进行添加、删除等操作。</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;使用Valine来为你的博客添加评论系统&quot;&gt;&lt;a href=&quot;#使用Valine来为你的博客添加评论系统&quot; class=&quot;headerlink&quot; title=&quot;使用Valine来为你的博客添加评论系统&quot;&gt;&lt;/a&gt;使用Valine来为你的博客添加评论系统&lt;/h1&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="LeanCloud" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/LeanCloud/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lucky as Me</title>
+    <link href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/03/31/presentation/"/>
+    <id>http://xn--jprx0p8s0d.xn--6qq986b3xl/2018/03/31/presentation/</id>
+    <published>2018-03-31T12:14:51.000Z</published>
+    <updated>2018-05-07T10:30:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>同意；<br>↓<br>↓<br>↓</p><p>表达敬意；<br>↓<br>↓<br>↓</p><p>简短介绍大学生的萎靡的精神状态in life and work,不好;<br>↓<br>↓<br>↓</p><p>介绍怎样的一个精神状态才是好的for life and work;<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓</p><p>↓<br>↓<br>↓<br>←<br>←<br>←</p></blockquote><hr><blockquote><p>Lucky as me.</p><p>It’s an honor for me to gain this opportunity to encounter that very one I appreciate who lights up my boring spirit and colour my life.</p><p>Although I got a little latter position,I still get chance to change something that seems like I can not alter now.</p><p>Additionally,I have the high responsibility to not only cultivate my mental abilities ,but also steel my willpower,so that I can reach a better me one day.</p><p>Eventally,I hope her happy everyday.</p><p>And I’m grateful for that.</p><p>//悄悄比个心<code>♥</code>应该没人看到(逃…)</p></blockquote><hr><h1 id="MY-【ONE】"><a href="#MY-【ONE】" class="headerlink" title="MY 【ONE】"></a>MY 【ONE】</h1><blockquote><p><code>2018/4/25 23:21:25</code>我好喜欢SKX啊~我要做一个很努力的程序员和一个很好的BF~</p><p><code>2018/4/27 23:08:48</code>她总是没有安全感，我努力带给她；这么可爱的女孩，我很爱她~<br><code>2018/4/27 23:10:44</code>也许是慢慢地发现她的好，我沦陷了？也许爱着爱着，就成为了一种习惯~</p><p><code>2018/4/27 23:14:18</code>第一次爱得这么疯狂</p><p><code>2018/5/4 0:35:14</code>宋老师真的很可爱，对喜欢的人事物都非常投入<br><code>2018/5/4 0:36:30</code>喜欢宋老师</p><p><code>2018/5/7 18:26:25</code> ♥我爱皮永琪【宋老师写的】，我爱SKX【我写的】♥ 宋可馨同学表示也很沉迷。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;同意；&lt;br&gt;↓&lt;br&gt;↓&lt;br&gt;↓&lt;/p&gt;
+&lt;p&gt;表达敬意；&lt;br&gt;↓&lt;br&gt;↓&lt;br&gt;↓&lt;/p&gt;
+&lt;p&gt;简短介绍大学生的萎靡的精神状态in life and work,不好;&lt;br&gt;↓&lt;br&gt;↓&lt;br&gt;↓&lt;/p&gt;
+&lt;p&gt;介绍怎样的一个精神状态才
+      
+    
+    </summary>
+    
+    
+      <category term="sankexing" scheme="http://xn--jprx0p8s0d.xn--6qq986b3xl/tags/sankexing/"/>
+    
+  </entry>
+  
+</feed>

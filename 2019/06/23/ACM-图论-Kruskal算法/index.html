@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt("Please enter the password!") !== ''){
+                alert("Error!");
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5e7162b1.js","daovoice")
+daovoice('init', {
+  app_id: "5e7162b1"
+});
+daovoice('update');
+</script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16-16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Innovation" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="图论中最小生成树之Kruskal算法1.背景·  Kruskal算法是一种用来寻找最小生成树的算法，基于并查集和贪心算法，由Joseph Kruskal在1956年发表。 用来解决同样问题的还有Prim算法和Boruvka算法等（现在还有一种比较新的算法——solin算法，这个算法的时间复杂度为（nlogm),即在最差的情况下也比Prim算法（nlogn）快，因为（nlogm）几乎达不到）。 三种">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图论中最小生成树之Kruskal算法">
+<meta property="og:url" content="http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-图论-Kruskal算法/index.html">
+<meta property="og:site_name" content="Innovation">
+<meta property="og:description" content="图论中最小生成树之Kruskal算法1.背景·  Kruskal算法是一种用来寻找最小生成树的算法，基于并查集和贪心算法，由Joseph Kruskal在1956年发表。 用来解决同样问题的还有Prim算法和Boruvka算法等（现在还有一种比较新的算法——solin算法，这个算法的时间复杂度为（nlogm),即在最差的情况下也比Prim算法（nlogn）快，因为（nlogm）几乎达不到）。 三种">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/fAheIqZ.png">
+<meta property="og:updated_time" content="2018-04-06T08:18:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图论中最小生成树之Kruskal算法">
+<meta name="twitter:description" content="图论中最小生成树之Kruskal算法1.背景·  Kruskal算法是一种用来寻找最小生成树的算法，基于并查集和贪心算法，由Joseph Kruskal在1956年发表。 用来解决同样问题的还有Prim算法和Boruvka算法等（现在还有一种比较新的算法——solin算法，这个算法的时间复杂度为（nlogm),即在最差的情况下也比Prim算法（nlogn）快，因为（nlogm）几乎达不到）。 三种">
+<meta name="twitter:image" content="https://i.imgur.com/fAheIqZ.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-图论-Kruskal算法/"/>
+
+
+
+
+
+
+  <title>图论中最小生成树之Kruskal算法 | Innovation</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/IlIlIlIlIlIlI/ilililililili.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Innovation</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-图论-Kruskal算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Innovation">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://i.imgur.com/sux5MCd.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Innovation">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">图论中最小生成树之Kruskal算法</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-23T22:48:08+08:00">
+                2019-06-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-06T16:18:10+08:00">
+                2018-04-06
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/23/ACM-图论-Kruskal算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/23/ACM-图论-Kruskal算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/23/ACM-图论-Kruskal算法/" class="leancloud_visitors" data-flag-title="图论中最小生成树之Kruskal算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  907
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="图论中最小生成树之Kruskal算法"><a href="#图论中最小生成树之Kruskal算法" class="headerlink" title="图论中最小生成树之Kruskal算法"></a>图论中最小生成树之Kruskal算法</h1><h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h2><p>·</p>
+<blockquote>
+<p>Kruskal算法是一种用来寻找最小生成树的算法，基于并查集和贪心算法，由Joseph Kruskal在1956年发表。</p>
+<p>用来解决同样问题的还有Prim算法和Boruvka算法等（现在还有一种比较新的算法——solin算法，这个算法的时间复杂度为（nlogm),即在最差的情况下也比Prim算法（nlogn）快，因为（nlogm）几乎达不到）。</p>
+<p>三种算法都是贪婪算法的应用，和Boruvka算法不同的地方是，Kruskal算法在图中存在<strong>相同权值</strong>的边时也有效。</p>
+</blockquote>
+<h2 id="2-伪代码"><a href="#2-伪代码" class="headerlink" title="2.伪代码"></a>2.伪代码</h2><pre><code>int kruskal(int n,int m)
+{
+/**初始化父节点；
+将图的边按权值排序；
+每次取权值最小的边；
+查：判断每条边的两端点是否属于同一集合，
+即是否有相同的根节点；
+并：若是同一集合,则舍去，反之合并到同一个根节点下；
+将选中的边的权值累加，并保存于变量ans中；
+*/
+}
+</code></pre><h2 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h2><pre><code>#include&lt;bits/stdc++.h&gt;
+#define maxn 1024
+using namespace std;
+
+typedef struct Edge
+{
+    int a;
+    int b;
+    int w;
+}edge;
+
+//定义全局变量，方便
+int n,m;
+
+edge a[maxn];
+int fa[maxn];//每个点的父节点
+int ra[maxn];//?每个点的阶数?
+
+//自建判断函数
+int cmp(const void *a,const void *b)
+{
+    return ((edge*)a)-&gt;w - ((edge*)b)-&gt;w;
+}
+
+//初始化树
+void init(int n)
+{
+    for(int i = 0;i&lt;n;i++)
+    {
+        ra[i] = 0;
+        fa[i] = i;
+    }
+}
+
+//查找点的父结点
+int finde(int x)
+{
+/*
+    int root = x;
+    while(root != fa[root])
+    {
+        root = fa[root];
+    }
+    while(x != root)
+    {
+        int t = fa[x];
+        fa[x] = root;
+        x = t;
+    }
+    return root;
+}
+*/
+
+//两种都可以
+        if(fa[x] == x)
+            return x;
+        else
+           finde(fa[x]);
+    }
+
+//连结两点
+void unite(int x,int y)
+{
+    x = finde(x);
+    y = finde(y);
+    if(ra[x] &gt;= ra[y])
+    {
+        fa[y] = x;
+        if(ra[x] == ra[y])
+            ra[x]++;
+    }
+    else
+    {
+        fa[x] = y;
+    }
+}
+
+//查找最短路,返回最小值
+//n为边，m为点
+int kruskal(int n,int m)
+{
+    int nEdge = 0;
+    int ans = 0;
+    qsort(a,n,sizeof(a[0]),cmp);
+    for(int i = 0;i&lt;n &amp;&amp; nEdge != m-1;i++)
+    {
+        //判断一条边的两个点是否为同一棵树
+        if(finde(a[i].a) != finde(a[i].b))
+        {
+                unite(a[i].a,a[i].b);
+                ans += a[i].w;
+                nEdge++;
+        }
+    }
+    //如果跳出循环，即加入的边的数量小于m-1，则表明改无向图不连通，即不存在最小生成数
+    if(nEdge &lt; m-1)
+    {
+        ans = -1;
+    }
+    return ans;
+}
+int main()
+{
+    int Ans;
+    //n = 0 时退出
+    while(scanf(&quot;%d%d&quot;,&amp;n,&amp;m),n)
+    {
+        init(m);
+        for(int i = 0;i&lt;n;i++)
+        {
+            scanf(&quot;%d%d%d&quot;,&amp;a[i].a,&amp;a[i].b,&amp;a[i].w);
+        }
+
+        Ans = kruskal(n,m);
+
+        if(Ans == -1)
+        {
+            printf(&quot;?\n&quot;);
+        }
+        else
+        {
+            printf(&quot;%d\n&quot;,Ans);
+        }
+    }
+    return 0;
+}
+</code></pre><p>运行结果：</p>
+<p><img src="https://i.imgur.com/fAheIqZ.png" alt=""></p>
+<h3 id="kruskal的时间复杂度"><a href="#kruskal的时间复杂度" class="headerlink" title="kruskal的时间复杂度"></a>kruskal的时间复杂度</h3><ul>
+<li>Kruskal算法每次要从都要从剩余的边中选取一个最小的边。通常我们要先对边按权值从小到大排序，这一步的时间复杂度为为O(nlogn)。</li>
+</ul>
+<ul>
+<li>Kruskal算法的实现通常使用并查集，来<strong>快速判断</strong>两个顶点是否属于同一个集合。<strong>最坏的情况可能要枚举完所有的边</strong>，此时要循环n次，所以这一步的时间复杂度为O(nα(V))，其中α为Ackermann函数，其增长<strong>非常慢</strong>，可以视为常数。</li>
+</ul>
+<ul>
+<li>所以Kruskal算法的时间复杂度为O(nlogn)</li>
+</ul>
+<h2 id="大礼包"><a href="#大礼包" class="headerlink" title="大礼包"></a>大礼包</h2><h3 id="你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？"><a href="#你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？" class="headerlink" title="你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？"></a>你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？</h3><p>有位老兄为我们准备了<a href="http://blog.csdn.net/luomingjun12315/article/details/47438607" target="_blank" rel="noopener"><strong>图论大礼包</strong></a>!!!</p>
+<p>在此感谢大佬<a href="http://blog.csdn.net/luomingjun12315" target="_blank" rel="noopener">@Enstein_Jun</a>！</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://blog.csdn.net/luomingjun12315/article/details/47700237" target="_blank" rel="noopener">最小生成树之Kruskal算法</a></li>
+<li><a href="http://blog.csdn.net/tham_/article/details/46049023" target="_blank" rel="noopener">图算法 最小生成树邻接表 Kruskal算法（并查集）</a></li>
+<li><a href="https://www.cnblogs.com/biyeymyhjob/archive/2012/07/30/2615542.html" target="_blank" rel="noopener">最小生成树-Prim算法和Kruskal算法</a></li>
+</ul>
+<h4 id="学渣并不想跟你讲话，并向你扔了一道oj题-畅通工程"><a href="#学渣并不想跟你讲话，并向你扔了一道oj题-畅通工程" class="headerlink" title="学渣并不想跟你讲话，并向你扔了一道oj题 畅通工程"></a>学渣并不想跟你讲话，并向你扔了一道oj题 <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1863" target="_blank" rel="noopener">畅通工程</a></h4><h4 id="附上-Enstein-Jun的题解-传送门"><a href="#附上-Enstein-Jun的题解-传送门" class="headerlink" title="附上@Enstein_Jun的题解 传送门"></a>附上<a href="http://blog.csdn.net/luomingjun12315" target="_blank" rel="noopener">@Enstein_Jun</a>的题解 <a href="http://blog.csdn.net/luomingjun12315/article/details/47700237" target="_blank" rel="noopener">传送门</a></h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Adhere to original technology sharing, your support will encourage me to continue to create!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Innovation 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="Innovation 比特币"/>
+        <p>比特币</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Innovation
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-图论-Kruskal算法/" title="图论中最小生成树之Kruskal算法">http://xn--jprx0p8s0d.xn--6qq986b3xl/2019/06/23/ACM-图论-Kruskal算法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/27/关于不指定个数的输入问题/" rel="next" title="关于不指定个数的输入问题">
+                <i class="fa fa-chevron-left"></i> 关于不指定个数的输入问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://i.imgur.com/sux5MCd.jpg"
+                alt="Innovation" />
+            
+              <p class="site-author-name" itemprop="name">Innovation</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图论中最小生成树之Kruskal算法"><span class="nav-number">1.</span> <span class="nav-text">图论中最小生成树之Kruskal算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-背景"><span class="nav-number">1.1.</span> <span class="nav-text">1.背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-伪代码"><span class="nav-number">1.2.</span> <span class="nav-text">2.伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-代码实现"><span class="nav-number">1.3.</span> <span class="nav-text">3.代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kruskal的时间复杂度"><span class="nav-number">1.3.1.</span> <span class="nav-text">kruskal的时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大礼包"><span class="nav-number">1.4.</span> <span class="nav-text">大礼包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？"><span class="nav-number">1.4.1.</span> <span class="nav-text">你渴望力量吗？你渴望变强吗？你渴望原地爆炸吗？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">1.5.</span> <span class="nav-text">参考文章</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#学渣并不想跟你讲话，并向你扔了一道oj题-畅通工程"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">学渣并不想跟你讲话，并向你扔了一道oj题 畅通工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附上-Enstein-Jun的题解-传送门"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">附上@Enstein_Jun的题解 传送门</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017 - 2019</span>
+  <span class="with-love">
+    <i class="fa fa-Innovation">♥</i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Innovation</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">25.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">本站总访问量<span id="busuanzi_value_site_pv"></span>次
+本站访客数<span id="busuanzi_value_site_uv"></span>次 | 由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'L77X4F9U4GkQrcGbvfSMJtOW-gzGzoHsz',
+        appKey: '27zQDIoJr3srhe92ohnT0Qfu',
+        placeholder: 'It is my honor to have a nice chat with you!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("wvUPI9zm3lO0MPfr5L5f0Hxw-gzGzoHsz", "wuiLdD1g4QUCkD2XxRRvmXe1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
