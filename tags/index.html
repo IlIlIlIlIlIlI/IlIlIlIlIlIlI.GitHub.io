@@ -590,7 +590,7 @@ daovoice('update');
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail';
+    var guest = 'nick';
     guest = guest.split(',').filter(function (item) {
       return GUEST.indexOf(item)>-1;
     });
@@ -602,18 +602,16 @@ daovoice('update');
         appKey: '27zQDIoJr3srhe92ohnT0Qfu',
         placeholder: 'I'm glad to have a nice chat with you!',
         avatar:'retro',
-        guest_info:['nick', 'mail'] ,  //评论者只需要提供评论的昵称即可
+        guest_info:['nick'] ,  //评论者只需要提供评论的昵称即可
         pageSize:'10' || 10,
     });
     //增加以下六行代码去除 power by valine
-    /*
     var infoEle = document.querySelector('#comments .info');
     if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
       infoEle.childNodes.forEach(function(item) {
         item.parentNode.removeChild(item);
       });
     }
-    */
   </script>
 
 
