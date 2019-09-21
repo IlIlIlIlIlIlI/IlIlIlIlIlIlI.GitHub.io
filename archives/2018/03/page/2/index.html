@@ -117,7 +117,7 @@ daovoice('update');
     root: '/',
     scheme: 'Mist',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -455,8 +455,6 @@ daovoice('update');
         <div class="back-to-top">
           <i class="fa fa-arrow-up"></i>
           
-            <span id="scrollpercent"><span>0</span>%</span>
-          
         </div>
       
 
@@ -645,33 +643,6 @@ daovoice('update');
 
 
 
-
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//unjkp.com/valine/dist/Valine.min.js"></script>
-  <script src="/js/src/Valine.min.js"></script>
-
-  
-  
-  <script src="/js/src/Valine.min.js"></script>
-  
-  <script type="text/javascript">
-    var GUEST = ['nick','mail','link'];
-    var guest = 'nick';
-    guest = guest.split(',').filter(function (item) {
-      return GUEST.indexOf(item)>-1;
-    });
-    new Valine({
-        el: '#comments' ,
-        verify: false,
-        notify: true,
-        appId: 'L77X4F9U4GkQrcGbvfSMJtOW-gzGzoHsz',
-        appKey: '27zQDIoJr3srhe92ohnT0Qfu',
-        placeholder: 'I'm glad to have a nice chat with you!',
-        avatar:'retro',
-        guest_info:['nick'] ,
-        pageSize:'10' || 10,
-    });
-  </script>
 
 
   
