@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://172.27.70.148/"/>
-  <updated>2019-09-21T14:43:41.352Z</updated>
+  <updated>2019-12-27T16:06:02.836Z</updated>
   <id>http://172.27.70.148/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>个人简历</title>
+    <link href="http://172.27.70.148/2019/12/28/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/"/>
+    <id>http://172.27.70.148/2019/12/28/个人简历/</id>
+    <published>2019-12-27T16:01:11.000Z</published>
+    <updated>2019-12-27T16:06:02.836Z</updated>
+    
+    <content type="html"><![CDATA[<div class="row">    <embed src="./皮永琪_CV.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        
+
+	&lt;div class=&quot;row&quot;&gt;
+    &lt;embed src=&quot;./皮永琪_CV.pdf&quot; width=&quot;100%&quot; height=&quot;550&quot; type=&quot;application/pdf&quot;&gt;
+	&lt;/div&gt;
+
+
+
+
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>图论中最小生成树之Kruskal算法</title>
@@ -476,33 +505,6 @@
     
     
       <category term="LeanCloud" scheme="http://172.27.70.148/tags/LeanCloud/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Lucky as Me</title>
-    <link href="http://172.27.70.148/2018/03/31/presentation/"/>
-    <id>http://172.27.70.148/2018/03/31/presentation/</id>
-    <published>2018-03-31T12:14:51.000Z</published>
-    <updated>2018-05-07T10:30:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>同意；<br>↓<br>↓<br>↓</p><p>表达敬意；<br>↓<br>↓<br>↓</p><p>简短介绍大学生的萎靡的精神状态in life and work,不好;<br>↓<br>↓<br>↓</p><p>介绍怎样的一个精神状态才是好的for life and work;<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓<br>↓</p><p>↓<br>↓<br>↓<br>←<br>←<br>←</p></blockquote><hr><blockquote><p>Lucky as me.</p><p>It’s an honor for me to gain this opportunity to encounter that very one I appreciate who lights up my boring spirit and colour my life.</p><p>Although I got a little latter position,I still get chance to change something that seems like I can not alter now.</p><p>Additionally,I have the high responsibility to not only cultivate my mental abilities ,but also steel my willpower,so that I can reach a better me one day.</p><p>Eventally,I hope her happy everyday.</p><p>And I’m grateful for that.</p><p>//悄悄比个心<code>♥</code>应该没人看到(逃…)</p></blockquote><hr><h1 id="MY-【ONE】"><a href="#MY-【ONE】" class="headerlink" title="MY 【ONE】"></a>MY 【ONE】</h1><blockquote><p><code>2018/4/25 23:21:25</code>我好喜欢SKX啊~我要做一个很努力的程序员和一个很好的BF~</p><p><code>2018/4/27 23:08:48</code>她总是没有安全感，我努力带给她；这么可爱的女孩，我很爱她~<br><code>2018/4/27 23:10:44</code>也许是慢慢地发现她的好，我沦陷了？也许爱着爱着，就成为了一种习惯~</p><p><code>2018/4/27 23:14:18</code>第一次爱得这么疯狂</p><p><code>2018/5/4 0:35:14</code>宋老师真的很可爱，对喜欢的人事物都非常投入<br><code>2018/5/4 0:36:30</code>喜欢宋老师</p><p><code>2018/5/7 18:26:25</code> ♥我爱皮永琪【宋老师写的】，我爱SKX【我写的】♥ 宋可馨同学表示也很沉迷。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;同意；&lt;br&gt;↓&lt;br&gt;↓&lt;br&gt;↓&lt;/p&gt;
-&lt;p&gt;表达敬意；&lt;br&gt;↓&lt;br&gt;↓&lt;br&gt;↓&lt;/p&gt;
-&lt;p&gt;简短介绍大学生的萎靡的精神状态in life and work,不好;&lt;br&gt;↓&lt;br&gt;↓&lt;br&gt;↓&lt;/p&gt;
-&lt;p&gt;介绍怎样的一个精神状态才
-      
-    
-    </summary>
-    
-    
-      <category term="sankexing" scheme="http://172.27.70.148/tags/sankexing/"/>
     
   </entry>
   
