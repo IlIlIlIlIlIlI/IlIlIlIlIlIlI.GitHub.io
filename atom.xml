@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://172.27.70.148/"/>
-  <updated>2019-12-27T16:06:02.836Z</updated>
+  <updated>2019-12-27T16:12:06.647Z</updated>
   <id>http://172.27.70.148/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://172.27.70.148/2019/12/28/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/"/>
     <id>http://172.27.70.148/2019/12/28/个人简历/</id>
     <published>2019-12-27T16:01:11.000Z</published>
-    <updated>2019-12-27T16:06:02.836Z</updated>
+    <updated>2019-12-27T16:12:06.647Z</updated>
     
-    <content type="html"><![CDATA[<div class="row">    <embed src="./皮永琪_CV.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    <content type="html"><![CDATA[<div class="row">    <embed src="piyongqi_CV.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
     
     <summary type="html">
     
@@ -32,7 +32,7 @@
         
 
 	&lt;div class=&quot;row&quot;&gt;
-    &lt;embed src=&quot;./皮永琪_CV.pdf&quot; width=&quot;100%&quot; height=&quot;550&quot; type=&quot;application/pdf&quot;&gt;
+    &lt;embed src=&quot;piyongqi_CV.pdf&quot; width=&quot;100%&quot; height=&quot;550&quot; type=&quot;application/pdf&quot;&gt;
 	&lt;/div&gt;
 
 
